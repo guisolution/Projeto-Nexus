@@ -94,6 +94,8 @@ function RobotCore({ final = false }: { final?: boolean }) {
       </div>
       <div className="robot-neck" />
       <div className="robot-chest">
+        {/* LOGÓTIPO DA HYPERA NO PEITO DO ROBÔ */}
+        <img src="/logo-hypera-pharma-1536.png" alt="Hypera" className="robot-logo-estampa" />
         <div className="robot-chest-line" />
         <div className="robot-chest-core"><CircleDot size={16} /></div>
         <div className="robot-chest-line robot-chest-line--short" />
@@ -188,7 +190,13 @@ export default function Home() {
       <section className="hero-shell reveal-on-scroll" id="top">
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-dot" /> ECOSSISTEMA OPERACIONAL / 001</div>
-          <h1>Dado disperso<br /><em>vira decisão automática.</em></h1>
+          
+          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+          <h1>
+            <span className="text-reveal-mask">Dado disperso</span><br />
+            <em><span className="text-reveal-mask">vira decisão automática.</span></em>
+          </h1>
+          
           <p className="hero-lede">Guilherme de Paula · Projeto Nexus. Uma frente, vários projetos, um objetivo: transformar dados confiáveis em decisão mais rápida.</p>
           <div className="hero-actions">
             <button className="button button--primary" onClick={() => scrollTo("nucleo")}>Conhecer o núcleo <ArrowRight size={16} /></button>
@@ -205,7 +213,11 @@ export default function Home() {
           <div className="visual-label visual-label--top"><span className="pulse-dot" /> LIVE CORE <b>04.0</b></div>
           <div className="visual-label visual-label--left"><span>NODE / 01</span><b>CONTROL</b></div>
           <div className="visual-label visual-label--right"><span>SYNC RATE</span><b>99.8%</b></div>
-          <div className="robot-stage"><RobotCore /></div>
+          
+          <div className="robot-stage container-interativo">
+            <RobotCore />
+          </div>
+
           <div className="visual-data visual-data--one"><span>SAP</span><ArrowRight size={12} /><span>BI</span><b>CONNECTED</b></div>
           <div className="visual-data visual-data--two"><span>LAST PULSE</span><b>08:40:21</b></div>
           <div className="visual-axis visual-axis--x" /><div className="visual-axis visual-axis--y" />
@@ -221,7 +233,14 @@ export default function Home() {
       <section className="intro-section container reveal-on-scroll" id="nucleo">
         <div className="section-kicker">/ O NÚCLEO</div>
         <div className="intro-grid">
-          <h2>Nexus: uma frente,<br /><span>vários projetos.</span><br />Um objetivo.</h2>
+          
+          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+          <h2>
+            <span className="text-reveal-mask">Nexus: uma frente,</span><br />
+            <span><span className="text-reveal-mask">vários projetos.</span></span><br />
+            <span className="text-reveal-mask">Um objetivo.</span>
+          </h2>
+          
           <div className="intro-note"><p>Automação de processos antes manuais, confiabilidade de dados — uma fonte única de verdade — facilidade no dia a dia operacional e uma estrutura pensada para crescer.</p><a href="#fluxo">Ver visão sistêmica <ArrowUpRight size={15} /></a></div>
         </div>
         <div className="principle-row">
@@ -233,12 +252,28 @@ export default function Home() {
 
       <section className="problem-section container reveal-on-scroll" aria-label="O problema">
         <div className="section-kicker">/ O PROBLEMA</div>
-        <div className="problem-grid"><h2>A logística tomava decisão<br /><em>sem enxergar o problema a tempo.</em></h2><div className="problem-list"><div><span>01</span><p>Não tinha todas as informações em um lugar só.</p></div><div><span>02</span><p>Atrasos e gargalos só eram descobertos depois de acontecer.</p></div><div><span>03</span><p>Faltava um lugar único, confiável e atualizado automaticamente.</p></div></div></div>
+        <div className="problem-grid">
+          
+          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+          <h2>
+            <span className="text-reveal-mask">A logística tomava decisão</span><br />
+            <em><span className="text-reveal-mask">sem enxergar o problema a tempo.</span></em>
+          </h2>
+          
+          <div className="problem-list"><div><span>01</span><p>Não tinha todas as informações em um lugar só.</p></div><div><span>02</span><p>Atrasos e gargalos só eram descobertos depois de acontecer.</p></div><div><span>03</span><p>Faltava um lugar único, confiável e atualizado automaticamente.</p></div></div></div>
       </section>
 
       <section className="modules-section reveal-on-scroll" id="sistemas">
         <div className="container">
-          <div className="section-heading"><div><div className="section-kicker">/ SISTEMAS DO ECOSSISTEMA</div><h2>Operações que<br /><em>não perdem o fio.</em></h2></div><span className="heading-index">NXS—02<br /><b>2026 / ACTIVE</b></span></div>
+          <div className="section-heading"><div><div className="section-kicker">/ SISTEMAS DO ECOSSISTEMA</div>
+          
+          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+          <h2>
+            <span className="text-reveal-mask">Operações que</span><br />
+            <em><span className="text-reveal-mask">não perdem o fio.</span></em>
+          </h2>
+          
+          </div><span className="heading-index">NXS—02<br /><b>2026 / ACTIVE</b></span></div>
           <div className="modules-layout">
             <div className="module-list">
               {modules.map((module) => {
@@ -260,7 +295,15 @@ export default function Home() {
       </section>
 
       <section className="flow-section container reveal-on-scroll" id="fluxo">
-        <div className="section-heading"><div><div className="section-kicker">/ IMPACTO CONSOLIDADO</div><h2>Dois projetos,<br /><em>um mesmo efeito.</em></h2></div><p className="heading-description">Decisão mais rápida para o Comercial, Financeiro, Qualidade e Logística — com dado confiável em uma única visão sistêmica.</p></div>
+        <div className="section-heading"><div><div className="section-kicker">/ IMPACTO CONSOLIDADO</div>
+        
+        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+        <h2>
+          <span className="text-reveal-mask">Dois projetos,</span><br />
+          <em><span className="text-reveal-mask">um mesmo efeito.</span></em>
+        </h2>
+        
+        </div><p className="heading-description">Decisão mais rápida para o Comercial, Financeiro, Qualidade e Logística — com dado confiável em uma única visão sistêmica.</p></div>
         <div className="flow-map">
           <div className="flow-line"><span /><span /><span /><span /></div>
           <FlowNode icon={Database} label="SAP" detail="fonte operacional" active />
@@ -272,13 +315,29 @@ export default function Home() {
       </section>
 
       <section className="signal-section reveal-on-scroll">
-        <div className="container signal-grid"><div><div className="section-kicker">/ PRÓXIMO PASSO</div><h2>O Nexus<br /><em>continua.</em></h2><p>Conheça o Ritmo: uma plataforma para o gestor acompanhar atividades em tempo real, com formato gamificado e ranking dos analistas mais bem colocados.</p><button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button></div><div className="signal-board"><div className="signal-board__header"><span><span className="pulse-dot" /> RITMO / EM ANDAMENTO</span><span>REAL-TIME / NEXT</span></div><div className="signal-board__main"><div><small>ENGAGEMENT INDEX</small><strong>∞</strong><span className="positive"><ArrowUpRight size={13} /> Acompanhamento visual</span></div><div className="board-chart"><div className="chart-grid" /><svg viewBox="0 0 340 130" preserveAspectRatio="none"><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10" fill="none" stroke="currentColor" strokeWidth="3" /><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10 L340 130 L0 130Z" fill="currentColor" opacity=".08" /></svg></div></div><div className="signal-board__footer"><span><i className="dot-blue" /> GAMIFICADO <b>READY</b></span><span><i className="dot-green" /> RANKING <b>ACTIVE</b></span><span><i className="dot-violet" /> RITMO <b>NEXT</b></span></div></div></div>
+        <div className="container signal-grid"><div><div className="section-kicker">/ PRÓXIMO PASSO</div>
+        
+        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+        <h2>
+          <span className="text-reveal-mask">O Nexus</span><br />
+          <em><span className="text-reveal-mask">continua.</span></em>
+        </h2>
+        
+        <p>Conheça o Ritmo: uma plataforma para o gestor acompanhar atividades em tempo real, com formato gamificado e ranking dos analistas mais bem colocados.</p><button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button></div><div className="signal-board"><div className="signal-board__header"><span><span className="pulse-dot" /> RITMO / EM ANDAMENTO</span><span>REAL-TIME / NEXT</span></div><div className="signal-board__main"><div><small>ENGAGEMENT INDEX</small><strong>∞</strong><span className="positive"><ArrowUpRight size={13} /> Acompanhamento visual</span></div><div className="board-chart"><div className="chart-grid" /><svg viewBox="0 0 340 130" preserveAspectRatio="none"><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10" fill="none" stroke="currentColor" strokeWidth="3" /><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10 L340 130 L0 130Z" fill="currentColor" opacity=".08" /></svg></div></div><div className="signal-board__footer"><span><i className="dot-blue" /> GAMIFICADO <b>READY</b></span><span><i className="dot-green" /> RANKING <b>ACTIVE</b></span><span><i className="dot-violet" /> RITMO <b>NEXT</b></span></div></div></div>
       </section>
 
       <section className="farewell-section reveal-on-scroll" aria-label="Encerramento do Projeto Nexus">
         <div className="farewell-backdrop">NEXUS / NEXUS / NEXUS / NEXUS /</div>
         <div className="farewell-robot"><RobotCore final /></div>
-        <div className="farewell-copy"><span className="section-kicker">/ FECHAMENTO</span><h2>Comece pelo<br /><em>necessário.</em></h2><p>“Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.”<br /><small>— São Francisco de Assis</small></p><span className="farewell-status"><i /> PROJETO NEXUS / GUILHERME DE PAULA</span></div>
+        <div className="farewell-copy"><span className="section-kicker">/ FECHAMENTO</span>
+        
+        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
+        <h2>
+          <span className="text-reveal-mask">Comece pelo</span><br />
+          <em><span className="text-reveal-mask">necessário.</span></em>
+        </h2>
+        
+        <p>“Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.”<br /><small>— São Francisco de Assis</small></p><span className="farewell-status"><i /> PROJETO NEXUS / GUILHERME DE PAULA</span></div>
       </section>
 
       <footer className="site-footer container reveal-on-scroll"><a href="#top" className="brand"><NexusMark small /><span>PROJETO <strong>NEXUS</strong></span></a><span className="footer-center">ESTRUTURA PARA O QUE VEM A SEGUIR.</span><span className="footer-right">© 2026 / INTERNAL SYSTEM <ArrowUpRight size={14} /></span></footer>

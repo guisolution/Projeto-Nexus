@@ -61,7 +61,23 @@ a { color: inherit; text-decoration: none; }
 .top-signal > span:not(.top-signal__right) { width: 4px; height: 4px; border-radius: 50%; background: var(--blue); opacity: .65; }
 .top-signal__right { margin-left: auto; font-size: 8px; }
 .top-signal__right b { color: #2cad7a; font-weight: 500; margin-left: 6px; }
-.site-header { height: 86px; width: min(1180px, calc(100% - 64px)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 10; }
+
+/* Correção das bordas pretas do cabeçalho */
+.site-header { 
+  height: 86px; 
+  width: 100%; 
+  max-width: 100%; 
+  padding-left: max(32px, calc((100vw - 1180px) / 2));
+  padding-right: max(32px, calc((100vw - 1180px) / 2));
+  margin: 0 auto; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  position: relative; 
+  z-index: 10; 
+  background-color: #f7fbff;
+}
+
 .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--navy); font: 600 11px/1 var(--mono); letter-spacing: .08em; }
 .brand strong { font-weight: 500; color: var(--blue); }
 .nexus-mark { width: 30px; height: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; transform: rotate(45deg); }
@@ -122,8 +138,8 @@ a { color: inherit; text-decoration: none; }
 .robot-mouth { position: absolute; left: 42px; top: 71px; display: flex; gap: 4px; align-items: center; }
 .robot-mouth span { width: 8px; height: 3px; border-radius: 4px; background: #6ba3ed; }.robot-mouth span:nth-child(2), .robot-mouth span:nth-child(3) { height: 6px; background: var(--cyan); }
 .robot-neck { width: 46px; height: 30px; position: absolute; left: 108px; top: 128px; border: 2px solid var(--navy); border-top: 0; background: #d2ebff; }
-.robot-chest { position: absolute; left: 52px; top: 155px; width: 157px; height: 132px; border: 2px solid var(--navy); border-radius: 27px 27px 32px 32px; background: linear-gradient(145deg, #fff, #d6ecff); box-shadow: inset 0 -14px 18px rgb(57 151 228 / 12%); }
-.robot-chest::after { content: ''; position: absolute; inset: 13px; border: 1px solid #9dc7ef; border-radius: 17px; }
+.robot-chest { position: absolute; left: 52px; top: 155px; width: 157px; height: 132px; border: 2px solid var(--navy); border-radius: 27px 27px 32px 32px; background: linear-gradient(145deg, #fff, #d6ecff); box-shadow: inset 0 -14px 18px rgb(57 151 228 / 12%); overflow: hidden; }
+.robot-chest::after { content: ''; position: absolute; inset: 13px; border: 1px solid #9dc7ef; border-radius: 17px; pointer-events: none; z-index: 2; }
 .robot-chest-line { position: absolute; z-index: 2; left: 31px; top: 47px; width: 34px; height: 3px; background: #7fb5ec; box-shadow: 0 9px #b0d2ef, 0 18px #d0e5f5; }.robot-chest-line--short { left: auto; right: 31px; width: 22px; opacity: .7; }
 .robot-chest-core { position: absolute; z-index: 3; left: 68px; top: 45px; width: 23px; height: 23px; display: grid; place-items: center; color: var(--blue); border-radius: 50%; background: #fff; border: 2px solid var(--blue); box-shadow: 0 0 0 5px rgb(78 123 255 / 14%), 0 0 20px rgb(21 94 239 / 35%); }
 .robot-shoulder { position: absolute; width: 35px; height: 50px; top: 166px; background: #c7e7ff; border: 2px solid var(--navy); }.robot-shoulder--left { left: 25px; border-radius: 16px 5px 8px 16px; }.robot-shoulder--right { right: 25px; border-radius: 5px 16px 16px 8px; }
@@ -307,3 +323,117 @@ html { scroll-snap-type: y proximity; }
 /* Full-bleed correction: light slides extend edge-to-edge, content stays aligned to the Nexus grid. */
 .hero-shell, .intro-section, .problem-section, .flow-section { width: 100%; max-width: none; padding-left: max(32px, calc((100vw - 1180px) / 2)); padding-right: max(32px, calc((100vw - 1180px) / 2)); }
 @media (max-width: 620px) { .hero-shell, .intro-section, .problem-section, .flow-section { width: 100%; padding-left: 18px; padding-right: 18px; } }
+
+/* --- ANIMAÇÃO DE SCROLL (ESTILO PREMIUM / CASCATA) --- */
+.reveal-on-scroll {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.reveal-on-scroll h1,
+.reveal-on-scroll h2,
+.reveal-on-scroll p,
+.reveal-on-scroll .intro-note,
+.reveal-on-scroll .button,
+.reveal-on-scroll .principle-row > div,
+.reveal-on-scroll .flow-node {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.is-visible h1,
+.reveal-on-scroll.is-visible h2,
+.reveal-on-scroll.is-visible p,
+.reveal-on-scroll.is-visible .intro-note,
+.reveal-on-scroll.is-visible .button,
+.reveal-on-scroll.is-visible .principle-row > div,
+.reveal-on-scroll.is-visible .flow-node {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-on-scroll.is-visible h1,
+.reveal-on-scroll.is-visible h2 { 
+  transition-delay: 0.2s; 
+}
+
+.reveal-on-scroll.is-visible p, 
+.reveal-on-scroll.is-visible .intro-note { 
+  transition-delay: 0.25s; 
+}
+
+.reveal-on-scroll.is-visible .button,
+.reveal-on-scroll.is-visible .principle-row > div:nth-child(1),
+.reveal-on-scroll.is-visible .flow-node:nth-child(2) { 
+  transition-delay: 0.4s; 
+}
+
+.reveal-on-scroll.is-visible .principle-row > div:nth-child(2),
+.reveal-on-scroll.is-visible .flow-node:nth-child(3) { 
+  transition-delay: 0.55s; 
+}
+
+.reveal-on-scroll.is-visible .principle-row > div:nth-child(3),
+.reveal-on-scroll.is-visible .flow-node:nth-child(4) { 
+  transition-delay: 0.7s; 
+}
+
+/* EFEITO DE BLOCO REVELADOR (AZUL) */
+.text-reveal-mask {
+  position: relative;
+  display: inline-block;
+  overflow: hidden; 
+}
+
+.text-reveal-mask::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0077ff;
+  z-index: 2;
+  transform: translateX(0); 
+  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.reveal-on-scroll.is-visible .text-reveal-mask::after {
+  transform: translateX(105%); 
+}
+
+/* --- ESTAMPA DA HYPERA NO PEITO DO ROBÔ (CORRIGIDA E ÚNICA) --- */
+.robot-logo-estampa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%; 
+  height: auto;
+  z-index: 10;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+/* --- LIMPEZA E CENTRALIZAÇÃO PERFEITA DA ESTAMPA HYPERA --- */
+
+/* Esconde o círculo indicador e as linhas antigas do peito do robô */
+.robot-chest-core,
+.robot-chest-line {
+  display: none !important;
+}
+
+/* Posiciona e centraliza o logótipo com precisão cirúrgica no peito */
+.robot-logo-estampa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%; 
+  height: auto;
+  z-index: 20;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
