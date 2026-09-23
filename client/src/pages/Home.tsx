@@ -372,11 +372,11 @@ export default function Home() {
                   style={{ 
                     backfaceVisibility: "hidden", 
                     transform: "rotateY(180deg)",
-                    padding: "0.5rem", // Reduzimos o padding para a imagem aproveitar mais espaço
+                    padding: "0.5rem",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "#f8fafc" // Um cinza bem clarinho para o fundo
+                    backgroundColor: "#f8fafc"
                   }}
                 >
                   <img 
@@ -384,7 +384,6 @@ export default function Home() {
                     alt={`Interface do ${currentModule.title}`} 
                     className="w-full h-full object-contain rounded-xl"
                   />
-                  {/* Etiqueta subtil no verso indicando para voltar */}
                   <span className="absolute bottom-4 right-6 px-3 py-1 bg-white/80 backdrop-blur text-[10px] uppercase font-bold tracking-widest text-gray-600 rounded-full shadow-sm border border-gray-200">
                     CLIQUE PARA VOLTAR
                   </span>
@@ -416,16 +415,29 @@ export default function Home() {
         <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Comercial, Financeiro, Qualidade e Logística.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
       </section>
 
+      {/* SECÇÃO ATUALIZADA - RITMO COMO NA IMAGEM */}
       <section className="signal-section reveal-on-scroll">
-        <div className="container signal-grid"><div><div className="section-kicker">/ PRÓXIMO PASSO</div>
-        
-        <h2>
-          <span className="text-reveal-mask">O Nexus</span><br />
-          <em><span className="text-reveal-mask">continua.</span></em>
-        </h2>
-        
-        <p>Conheça o Ritmo: uma plataforma para o gestor acompanhar atividades em tempo real, com formato gamificado e ranking dos analistas mais bem colocados.</p><button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button></div><div className="signal-board"><div className="signal-board__header"><span><span className="pulse-dot" /> RITMO / EM ANDAMENTO</span><span>REAL-TIME / NEXT</span></div><div className="signal-board__main"><div><small>ENGAGEMENT INDEX</small><strong>∞</strong><span className="positive"><ArrowUpRight size={13} /> Acompanhamento visual</span></div><div className="board-chart"><div className="chart-grid" /><svg viewBox="0 0 340 130" preserveAspectRatio="none"><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10" fill="none" stroke="currentColor" strokeWidth="3" /><path d="M0 102 C26 98, 26 82, 52 88 S75 102, 96 78 S130 82, 148 60 S174 68, 193 52 S218 65, 237 37 S263 52, 282 31 S315 28, 340 10 L340 130 L0 130Z" fill="currentColor" opacity=".08" /></svg></div></div><div className="signal-board__footer"><span><i className="dot-blue" /> GAMIFICADO <b>READY</b></span><span><i className="dot-green" /> RANKING <b>ACTIVE</b></span><span><i className="dot-violet" /> RITMO <b>NEXT</b></span></div></div></div>
+        <div className="container signal-grid" style={{ alignItems: 'center' }}>
+          <div>
+            <div className="section-kicker">/ PRÓXIMO PASSO</div>
+            <h2>
+              <span className="text-reveal-mask">O Nexus</span><br />
+              <em><span className="text-reveal-mask">continua.</span></em>
+            </h2>
+            <p>Conheça o Ritmo: uma plataforma para o gestor acompanhar atividades em tempo real, com formato gamificado e ranking dos analistas mais bem colocados.</p>
+            <button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button>
+          </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', paddingLeft: '2rem' }}>
+            <img 
+              src="/Ritmo.png" 
+              alt="Plataforma Ritmo" 
+              style={{ width: '100%', maxWidth: '750px', borderRadius: '12px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)' }}
+            />
+          </div>
+        </div>
       </section>
+      {/* FIM DA SECÇÃO ATUALIZADA */}
 
       <section className="farewell-section reveal-on-scroll" aria-label="Encerramento do Projeto Nexus">
         <div className="farewell-backdrop">NEXUS / NEXUS / NEXUS / NEXUS /</div>
