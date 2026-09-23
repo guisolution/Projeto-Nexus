@@ -253,8 +253,8 @@ export default function Home() {
           <div className="intro-note"><p>Automação de processos antes manuais, confiabilidade de dados — uma fonte única de verdade — facilidade no dia a dia operacional e uma estrutura pensada para crescer.</p><a href="#fluxo">Ver visão sistêmica <ArrowUpRight size={15} /></a></div>
         </div>
         <div className="principle-row">
-          <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany em operação.</p></div>
-          <div><span>02</span><strong>Concluído</strong><p>Torre de Amostra Grátis em operação.</p></div>
+          <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany.</p></div>
+          <div><span>02</span><strong>Concluído</strong><p>Torre de Amostra Grátis.</p></div>
           <div><span>03</span><strong>Em andamento</strong><p>Ritmo: o próximo passo do Nexus.</p></div>
         </div>
       </section>
@@ -264,8 +264,8 @@ export default function Home() {
         <div className="problem-grid">
           
           <h2>
-            <span className="text-reveal-mask">A logística tomava decisão</span><br />
-            <em><span className="text-reveal-mask">sem enxergar o problema a tempo.</span></em>
+            <span className="text-reveal-mask">Sem um painel único</span><br />
+            <em><span className="text-reveal-mask">o atraso virava surpresa.</span></em>
           </h2>
           
           <div className="problem-list"><div><span>01</span><p>Não tinha todas as informações em um lugar só.</p></div><div><span>02</span><p>Atrasos e gargalos só eram descobertos depois de acontecer.</p></div><div><span>03</span><p>Faltava um lugar único, confiável e atualizado automaticamente.</p></div></div></div>
