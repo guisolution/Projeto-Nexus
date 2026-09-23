@@ -25,6 +25,7 @@ import {
   Zap,
 } from "lucide-react";
 
+// Adicionámos a propriedade "image" a cada módulo com os nomes exatos que configuraste
 const modules = [
   {
     id: "intercompany",
@@ -35,6 +36,7 @@ const modules = [
       "Painel 100% automático, atualizado 4x ao dia e disponível por e-mail e Power BI para antecipar o atraso antes que ele vire problema.",
     color: "blue",
     icon: Boxes,
+    image: "/painelic.png",
     metrics: [
       ["Atualizações", "04x / dia"],
       ["Saídas", "E-mail + BI"],
@@ -51,6 +53,7 @@ const modules = [
       "Visibilidade completa, do estoque até a entrega, acompanhando quarentena, shelf life, distribuição, reentrega e FNE.",
     color: "cyan",
     icon: Warehouse,
+    image: "/torreag.png",
     metrics: [
       ["Entregues", "860 mil+ caixas"],
       ["Reentrega", "120.832 caixas"],
@@ -94,7 +97,6 @@ function RobotCore({ final = false }: { final?: boolean }) {
       </div>
       <div className="robot-neck" />
       <div className="robot-chest">
-        {/* LOGÓTIPO DA HYPERA NO PEITO DO ROBÔ */}
         <img src="/logo-hypera-pharma-1536.png" alt="Hypera" className="robot-logo-estampa" />
         <div className="robot-chest-line" />
         <div className="robot-chest-core"><CircleDot size={16} /></div>
@@ -125,8 +127,17 @@ function FlowNode({ icon: Icon, label, detail, active = false }: { icon: typeof 
 export default function Home() {
   const [selectedModule, setSelectedModule] = useState("intercompany");
   const [booting, setBooting] = useState(() => !new URLSearchParams(window.location.search).has("skipboot"));
+  
+  // Estado que controla o giro do cartão
+  const [isCardFlipped, setIsCardFlipped] = useState(false);
+
   const currentModule = modules.find((module) => module.id === selectedModule) ?? modules[0];
   const CurrentIcon = currentModule.icon;
+
+  // Fecha o cartão automaticamente caso ele esteja girado e o utilizador mude de aba (ex: do IC para Amostras)
+  useEffect(() => {
+    setIsCardFlipped(false);
+  }, [selectedModule]);
 
   useEffect(() => {
     const bootTimer = window.setTimeout(() => setBooting(false), 2450);
@@ -191,7 +202,6 @@ export default function Home() {
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-dot" /> ECOSSISTEMA OPERACIONAL / 001</div>
           
-          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
           <h1>
             <span className="text-reveal-mask">Dado disperso</span><br />
             <em><span className="text-reveal-mask">vira decisão automática.</span></em>
@@ -234,7 +244,6 @@ export default function Home() {
         <div className="section-kicker">/ O NÚCLEO</div>
         <div className="intro-grid">
           
-          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
           <h2>
             <span className="text-reveal-mask">Nexus: uma frente,</span><br />
             <span><span className="text-reveal-mask">vários projetos.</span></span><br />
@@ -254,7 +263,6 @@ export default function Home() {
         <div className="section-kicker">/ O PROBLEMA</div>
         <div className="problem-grid">
           
-          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
           <h2>
             <span className="text-reveal-mask">A logística tomava decisão</span><br />
             <em><span className="text-reveal-mask">sem enxergar o problema a tempo.</span></em>
@@ -265,31 +273,126 @@ export default function Home() {
 
       <section className="modules-section reveal-on-scroll" id="sistemas">
         <div className="container">
-          <div className="section-heading"><div><div className="section-kicker">/ SISTEMAS DO ECOSSISTEMA</div>
+          <div className="section-heading">
+            <div>
+              <div className="section-kicker">/ SISTEMAS DO ECOSSISTEMA</div>
+              <h2>
+                <span className="text-reveal-mask">Operações que</span><br />
+                <em><span className="text-reveal-mask">não perdem o fio.</span></em>
+              </h2>
+            </div>
+            <span className="heading-index">NXS—02<br /><b>2026 / ACTIVE</b></span>
+          </div>
           
-          {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
-          <h2>
-            <span className="text-reveal-mask">Operações que</span><br />
-            <em><span className="text-reveal-mask">não perdem o fio.</span></em>
-          </h2>
-          
-          </div><span className="heading-index">NXS—02<br /><b>2026 / ACTIVE</b></span></div>
           <div className="modules-layout">
+            {/* Lista de Abas à esquerda */}
             <div className="module-list">
               {modules.map((module) => {
                 const Icon = module.icon;
-                return <button key={module.id} className={`module-tab ${selectedModule === module.id ? `module-tab--${module.color}` : ""}`} onClick={() => setSelectedModule(module.id)}><span className="module-tab__number">{module.index}</span><span className="module-tab__icon"><Icon size={19} /></span><span className="module-tab__name">{module.title.replace("\n", " ")}</span><ChevronRight size={17} /></button>;
+                return (
+                  <button 
+                    key={module.id} 
+                    className={`module-tab ${selectedModule === module.id ? `module-tab--${module.color}` : ""}`} 
+                    onClick={() => setSelectedModule(module.id)}
+                  >
+                    <span className="module-tab__number">{module.index}</span>
+                    <span className="module-tab__icon"><Icon size={19} /></span>
+                    <span className="module-tab__name">{module.title.replace("\n", " ")}</span>
+                    <ChevronRight size={17} />
+                  </button>
+                );
               })}
-              <div className="module-list__hint"><Sparkles size={14} /> Passe o cursor ou selecione um sistema para revelar a camada.</div>
+              <div className="module-list__hint"><Sparkles size={14} /> Selecione um sistema para revelar a camada.</div>
             </div>
-            <article className={`module-detail module-detail--${currentModule.color}`}>
-              <div className="module-detail__top"><span className="module-detail__tag">{currentModule.tag}</span><span className="module-detail__id">NXS / {currentModule.index}</span></div>
-              <div className="module-detail__title-row"><div><CurrentIcon size={24} strokeWidth={1.5} /><h3>{currentModule.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3></div><span className="module-detail__active"><span className="pulse-dot" /> ACTIVE</span></div>
-              <p className="module-detail__description">{currentModule.description}</p>
-              <div className="module-readout"><div><span>LEITURA PRINCIPAL</span><strong>{selectedModule === "intercompany" ? "Antecipar o atraso antes que ele vire problema." : "Visibilidade completa, do estoque até a entrega."}</strong></div><div><span>IMPACTO OPERACIONAL</span><strong>{selectedModule === "intercompany" ? "Causas mapeadas e histórico para consulta." : "Mais controle sobre cobertura, reentrega e FNE."}</strong></div></div>
-              <div className="metric-grid">{currentModule.metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>
-              <div className="module-detail__bottom"><div className="detail-bullets">{currentModule.bullets.map((bullet) => <span key={bullet}><Check size={13} /> {bullet}</span>)}</div><div className="detail-visual"><div className="mini-bars"><i /><i /><i /><i /><i /><i /><i /></div><div className="mini-line"><span /><span /><span /><span /><span /><span /><span /></div></div></div>
-            </article>
+
+            {/* CONTAINER GIRATÓRIO (FLIP CARD) */}
+            <div 
+              className="w-full relative cursor-pointer" 
+              style={{ perspective: "2000px" }}
+              onClick={() => setIsCardFlipped(!isCardFlipped)}
+            >
+              <div 
+                className="w-full relative transition-transform duration-700 ease-in-out h-full"
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform: isCardFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                }}
+              >
+                
+                {/* FRENTE: INFORMAÇÕES DO MÓDULO */}
+                <article 
+                  className={`module-detail module-detail--${currentModule.color}`}
+                  style={{ backfaceVisibility: "hidden" }}
+                >
+                  <div className="module-detail__top">
+                    <span className="module-detail__tag">{currentModule.tag}</span>
+                    <span className="module-detail__id">NXS / {currentModule.index}</span>
+                  </div>
+                  
+                  <div className="module-detail__title-row">
+                    <div>
+                      <CurrentIcon size={24} strokeWidth={1.5} />
+                      <h3>{currentModule.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3>
+                    </div>
+                    {/* Indicador visual sugerindo clique */}
+                    <span className="px-3 py-1 bg-gray-100 text-[10px] uppercase font-bold tracking-widest text-gray-500 rounded-full animate-pulse border border-gray-200">
+                      CLIQUE PARA VER A TELA
+                    </span>
+                  </div>
+                  
+                  <p className="module-detail__description">{currentModule.description}</p>
+                  
+                  <div className="module-readout">
+                    <div><span>LEITURA PRINCIPAL</span><strong>{selectedModule === "intercompany" ? "Antecipar o atraso antes que ele vire problema." : "Visibilidade completa, do estoque até a entrega."}</strong></div>
+                    <div><span>IMPACTO OPERACIONAL</span><strong>{selectedModule === "intercompany" ? "Causas mapeadas e histórico para consulta." : "Mais controle sobre cobertura, reentrega e FNE."}</strong></div>
+                  </div>
+                  
+                  <div className="metric-grid">
+                    {currentModule.metrics.map(([label, value]) => (
+                      <div key={label}><span>{label}</span><strong>{value}</strong></div>
+                    ))}
+                  </div>
+                  
+                  <div className="module-detail__bottom">
+                    <div className="detail-bullets">
+                      {currentModule.bullets.map((bullet) => (
+                        <span key={bullet}><Check size={13} /> {bullet}</span>
+                      ))}
+                    </div>
+                    <div className="detail-visual">
+                      <div className="mini-bars"><i /><i /><i /><i /><i /><i /><i /></div>
+                      <div className="mini-line"><span /><span /><span /><span /><span /><span /><span /></div>
+                    </div>
+                  </div>
+                </article>
+
+                {/* VERSO: IMAGEM DO PAINEL */}
+                <article 
+                  className={`module-detail module-detail--${currentModule.color} absolute top-0 left-0 w-full h-full`}
+                  style={{ 
+                    backfaceVisibility: "hidden", 
+                    transform: "rotateY(180deg)",
+                    padding: "0.5rem", // Reduzimos o padding para a imagem aproveitar mais espaço
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#f8fafc" // Um cinza bem clarinho para o fundo
+                  }}
+                >
+                  <img 
+                    src={currentModule.image} 
+                    alt={`Interface do ${currentModule.title}`} 
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                  {/* Etiqueta subtil no verso indicando para voltar */}
+                  <span className="absolute bottom-4 right-6 px-3 py-1 bg-white/80 backdrop-blur text-[10px] uppercase font-bold tracking-widest text-gray-600 rounded-full shadow-sm border border-gray-200">
+                    CLIQUE PARA VOLTAR
+                  </span>
+                </article>
+
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -297,7 +400,6 @@ export default function Home() {
       <section className="flow-section container reveal-on-scroll" id="fluxo">
         <div className="section-heading"><div><div className="section-kicker">/ IMPACTO CONSOLIDADO</div>
         
-        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
         <h2>
           <span className="text-reveal-mask">Dois projetos,</span><br />
           <em><span className="text-reveal-mask">um mesmo efeito.</span></em>
@@ -317,7 +419,6 @@ export default function Home() {
       <section className="signal-section reveal-on-scroll">
         <div className="container signal-grid"><div><div className="section-kicker">/ PRÓXIMO PASSO</div>
         
-        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
         <h2>
           <span className="text-reveal-mask">O Nexus</span><br />
           <em><span className="text-reveal-mask">continua.</span></em>
@@ -331,7 +432,6 @@ export default function Home() {
         <div className="farewell-robot"><RobotCore final /></div>
         <div className="farewell-copy"><span className="section-kicker">/ FECHAMENTO</span>
         
-        {/* TÍTULO COM EFEITO DE REVELAÇÃO */}
         <h2>
           <span className="text-reveal-mask">Comece pelo</span><br />
           <em><span className="text-reveal-mask">necessário.</span></em>
@@ -345,7 +445,6 @@ export default function Home() {
     </main>
   );
 }
-
 
 function IconPlaceholder() {
   return <Bot size={16} />;
