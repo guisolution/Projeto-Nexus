@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import {
   Activity,
   ArrowDownRight,
@@ -9,7 +10,6 @@ import {
   Cable,
   ChartNoAxesCombined,
   Check,
-  ChevronRight,
   CircleDot,
   Database,
   Gauge,
@@ -19,13 +19,15 @@ import {
   ScanLine,
   ServerCog,
   ShieldCheck,
-  Sparkles,
   Warehouse,
   Waypoints,
   Zap,
+  Clock,
+  AlertTriangle,
+  Truck
 } from "lucide-react";
 
-// Adicionámos a propriedade "image" a cada módulo com os nomes exatos que configuraste
+// Dados RESTAURADOS com as descrições originais
 const modules = [
   {
     id: "intercompany",
@@ -42,7 +44,13 @@ const modules = [
       ["Saídas", "E-mail + BI"],
       ["Histórico", "Completo"],
     ],
-    bullets: ["Paletes livres, quarentena e cargas disponíveis", "Destino, placa, transportadora e quantidade", "Pedido → faturado → embarque → lead time", "Negativos: pedido feito sem mercadoria disponível", "Causas: transporte, faturamento e NF"],
+    bullets: [
+      "Paletes livres, quarentena e cargas disponíveis",
+      "Destino, placa, transportadora e quantidade",
+      "Pedido → faturado → embarque → lead time",
+      "Negativos: pedido feito sem mercadoria disponível",
+      "Causas: transporte, faturamento e NF",
+    ],
   },
   {
     id: "samples",
@@ -59,7 +67,13 @@ const modules = [
       ["Reentrega", "120.832 caixas"],
       ["Atrasos", "832 cargas"],
     ],
-    bullets: ["Livre, quarentena, restrito e bloqueado", "OCT, FNE, reentrega e carro dedicado", "Shelf life, carteira e cobertura de estoque", "Filtros por ocorrência, período e representante", "NFs atrasadas × no prazo × total"],
+    bullets: [
+      "Livre, quarentena, restrito e bloqueado",
+      "OCT, FNE, reentrega e carro dedicado",
+      "Shelf life, carteira e cobertura de estoque",
+      "Filtros por ocorrência, período e representante",
+      "NFs atrasadas × no prazo × total",
+    ],
   },
 ];
 
@@ -125,19 +139,13 @@ function FlowNode({ icon: Icon, label, detail, active = false }: { icon: typeof 
 }
 
 export default function Home() {
-  const [selectedModule, setSelectedModule] = useState("intercompany");
   const [booting, setBooting] = useState(() => !new URLSearchParams(window.location.search).has("skipboot"));
   
-  // Estado que controla o giro do cartão
-  const [isCardFlipped, setIsCardFlipped] = useState(false);
+  const [flipIC, setFlipIC] = useState(false);
+  const [flipAG, setFlipAG] = useState(false);
 
-  const currentModule = modules.find((module) => module.id === selectedModule) ?? modules[0];
-  const CurrentIcon = currentModule.icon;
-
-  // Fecha o cartão automaticamente caso ele esteja girado e o utilizador mude de aba (ex: do IC para Amostras)
-  useEffect(() => {
-    setIsCardFlipped(false);
-  }, [selectedModule]);
+  const IconIC = modules[0].icon;
+  const IconAG = modules[1].icon;
 
   useEffect(() => {
     const bootTimer = window.setTimeout(() => setBooting(false), 2450);
@@ -147,11 +155,13 @@ export default function Home() {
     };
     updateScrollProgress();
     window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    
     const revealObserver = new IntersectionObserver(
       (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
       { threshold: 0.14 },
     );
     document.querySelectorAll(".reveal-on-scroll").forEach((element) => revealObserver.observe(element));
+    
     return () => {
       window.clearTimeout(bootTimer);
       window.removeEventListener("scroll", updateScrollProgress);
@@ -160,21 +170,37 @@ export default function Home() {
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
   };
 
+  const springTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+
   return (
-    <main className="nexus-page">
+    <main className="nexus-page bg-slate-50">
       <div className="scroll-rail" aria-hidden="true"><span /></div>
+      
       <div className={`boot-sequence ${booting ? "boot-sequence--active" : "boot-sequence--done"}`} aria-hidden={!booting}>
         <div className="boot-flash" />
         <div className="boot-rays"><i /><i /><i /><i /><i /><i /></div>
         <div className="boot-logotype"><NexusMark /><span>PROJETO <b>NEXUS</b></span></div>
         <div className="boot-progress"><span /><b>INITIALIZING CORE / 001</b></div>
       </div>
+      
       <section className="command-stage command-stage--opening reveal-on-scroll" aria-label="Abertura Projeto Nexus">
         <div className="command-stage__noise" />
-        <div className="command-stage__marquee command-stage__marquee--top"><span>PROJECT NEXUS / DATA CONTROL / INTELLIGENCE / PROJECT NEXUS / DATA CONTROL / INTELLIGENCE /</span></div>
+        <div className="command-stage__marquee command-stage__marquee--top"><span>PROJECT NEXUS / HYPERA LOGÍSTICA / INTELLIGENCE / PROJECT NEXUS / HYPERA LOGÍSTICA /</span></div>
         <div className="command-stage__marquee command-stage__marquee--bottom"><span>AUTOMATION / CONNECTED OPERATION / AUTOMATION / CONNECTED OPERATION /</span></div>
         <div className="command-stage__crosshair command-stage__crosshair--horizontal" /><div className="command-stage__crosshair command-stage__crosshair--vertical" />
         <div className="command-stage__opening-content"><h1>PROJETO<br /><em>NEXUS</em></h1></div>
@@ -189,30 +215,28 @@ export default function Home() {
           <span>PROJETO <strong>NEXUS</strong></span>
         </a>
         <nav className="site-nav" aria-label="Navegação principal">
-          <a href="#nucleo">O núcleo</a>
-          <a href="#sistemas">Sistemas</a>
-          <a href="#fluxo">Fluxo de dados</a>
+          <button onClick={() => scrollTo("nucleo")}>O conceito</button>
+          <button onClick={() => scrollTo("intercompany")}>Intercompany</button>
+          <button onClick={() => scrollTo("amostras")}>Amostras</button>
         </nav>
-        <button className="header-index" onClick={() => scrollTo("sistemas")}>
-          <span>INDEXAR PROJETO</span><ArrowUpRight size={15} />
+        <button className="header-index" onClick={() => scrollTo("ritmo")}>
+          <span>VER O FUTURO</span><ArrowUpRight size={15} />
         </button>
       </header>
 
       <section className="hero-shell reveal-on-scroll" id="top">
         <div className="hero-copy">
-          <div className="eyebrow"><span className="eyebrow-dot" /> ECOSSISTEMA OPERACIONAL / 001</div>
-          
+          <div className="eyebrow"><span className="eyebrow-dot" /> GUILHERME DE PAULA / 24 ANOS</div>
           <h1>
-            <span className="text-reveal-mask">Dado disperso</span><br />
-            <em><span className="text-reveal-mask">vira decisão automática.</span></em>
+            <span className="text-reveal-mask">Inteligência e</span><br />
+            <em><span className="text-reveal-mask">automação logística.</span></em>
           </h1>
-          
-          <p className="hero-lede">Guilherme de Paula · Projeto Nexus. Uma frente, vários projetos, um objetivo: transformar dados confiáveis em decisão mais rápida.</p>
+          <p className="hero-lede">Estágio em Engenharia de Software. Objetivo: Apresentar a evolução dos projetos de automação e inteligência logística desenvolvidos na Hypera.</p>
           <div className="hero-actions">
-            <button className="button button--primary" onClick={() => scrollTo("nucleo")}>Conhecer o núcleo <ArrowRight size={16} /></button>
-            <button className="button button--text" onClick={() => scrollTo("fluxo")}>Ver como flui <ArrowDownRight size={16} /></button>
+            <button className="button button--primary" onClick={() => scrollTo("nucleo")}>Conhecer o ecossistema <ArrowRight size={16} /></button>
+            <button className="button button--text" onClick={() => scrollTo("intercompany")}>Ver soluções <ArrowDownRight size={16} /></button>
           </div>
-          <div className="hero-footnote"><ShieldCheck size={15} /> Estrutura pensada para operação contínua, não para apresentações.</div>
+          <div className="hero-footnote"><ShieldCheck size={15} /> Estrutura pensada para operação contínua e escalável.</div>
         </div>
 
         <div className="hero-visual" aria-label="Visualização do núcleo Nexus">
@@ -241,122 +265,105 @@ export default function Home() {
       </div>
 
       <section className="intro-section container reveal-on-scroll" id="nucleo">
-        <div className="section-kicker">/ O NÚCLEO</div>
+        <div className="section-kicker">/ O CONCEITO NEXUS</div>
         <div className="intro-grid">
-          
           <h2>
-            <span className="text-reveal-mask">Nexus: uma frente,</span><br />
-            <span><span className="text-reveal-mask">vários projetos.</span></span><br />
-            <span className="text-reveal-mask">Um objetivo.</span>
+            <span className="text-reveal-mask">Ecossistema de</span><br />
+            <span><span className="text-reveal-mask">automação</span></span><br />
+            <span className="text-reveal-mask">logística.</span>
           </h2>
-          
-          <div className="intro-note"><p>O Projeto Nexus automatiza processos que antes eram manuais, unifica os dados em uma única fonte confiável e simplifica o dia a dia operacional, tudo isso com uma estrutura pensada para crescer.</p><a href="#fluxo">Ver visão sistêmica <ArrowUpRight size={15} /></a></div>
+          <div className="intro-note"><p>Nome e conceito criado para agrupar os projetos desenvolvidos, unificando as soluções em um ecossistema focado na melhoria contínua dos processos logísticos da Hypera.</p></div>
         </div>
         <div className="principle-row">
           <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany.</p></div>
           <div><span>02</span><strong>Concluído</strong><p>Torre de Amostra Grátis.</p></div>
-          <div><span>03</span><strong>Em andamento</strong><p>Ritmo: o próximo passo do Nexus.</p></div>
+          <div><span>03</span><strong>Em desenvolvimento</strong><p>Projeto Ritmo.</p></div>
         </div>
       </section>
 
-      <section className="problem-section container reveal-on-scroll" aria-label="O problema">
-        <div className="section-kicker">/ O PROBLEMA</div>
-        <div className="problem-grid">
+      {/* ========================================= */}
+      {/* 1. SEÇÃO: PAINEL INTERCOMPANY */}
+      {/* ========================================= */}
+      <section id="intercompany" className="relative pt-24 pb-24 bg-gradient-to-b from-white via-slate-50 to-white overflow-hidden">
+        <div className="container mx-auto px-4 max-w-7xl">
           
-          <h2>
-            <span className="text-reveal-mask">Sem um painel único</span><br />
-            <em><span className="text-reveal-mask">o atraso virava surpresa.</span></em>
-          </h2>
-          
-          <div className="problem-list"><div><span>01</span><p>Não tinha todas as informações em um lugar só.</p></div><div><span>02</span><p>Atrasos e gargalos só eram descobertos depois de acontecer.</p></div><div><span>03</span><p>Faltava um lugar único, confiável e atualizado automaticamente.</p></div></div></div>
-      </section>
-
-      <section className="modules-section reveal-on-scroll" id="sistemas">
-        <div className="container">
-          <div className="section-heading">
+          <div className="section-heading mb-12 reveal-on-scroll">
             <div>
-              <div className="section-kicker">/ SISTEMAS DO ECOSSISTEMA</div>
+              <div className="section-kicker text-blue-600">/ NXS-01 : AUTOMAÇÃO & GOVERNANÇA</div>
               <h2>
-                <span className="text-reveal-mask">Operações que</span><br />
-                <em><span className="text-reveal-mask">não perdem o fio.</span></em>
+                <span className="text-reveal-mask">Painel</span><br />
+                <em><span className="text-reveal-mask text-blue-900">Intercompany.</span></em>
               </h2>
             </div>
-            <span className="heading-index">NXS—02<br /><b>2026 / ACTIVE</b></span>
+            <span className="heading-index text-blue-800">ATUALIZAÇÃO<br /><b>04X / DIA</b></span>
           </div>
-          
-          <div className="modules-layout">
-            {/* Lista de Abas à esquerda */}
-            <div className="module-list">
-              {modules.map((module) => {
-                const Icon = module.icon;
-                return (
-                  <button 
-                    key={module.id} 
-                    className={`module-tab ${selectedModule === module.id ? `module-tab--${module.color}` : ""}`} 
-                    onClick={() => setSelectedModule(module.id)}
-                  >
-                    <span className="module-tab__number">{module.index}</span>
-                    <span className="module-tab__icon"><Icon size={19} /></span>
-                    <span className="module-tab__name">{module.title.replace("\n", " ")}</span>
-                    <ChevronRight size={17} />
-                  </button>
-                );
-              })}
-              <div className="module-list__hint"><Sparkles size={14} /> Selecione um sistema para revelar a camada.</div>
-            </div>
 
-            {/* CONTAINER GIRATÓRIO (FLIP CARD) */}
-            <div 
-              className="w-full relative cursor-pointer" 
-              style={{ perspective: "2000px" }}
-              onClick={() => setIsCardFlipped(!isCardFlipped)}
+          <div className="flex flex-col gap-12">
+            
+            {/* CARTÃO SUPERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
+            <motion.div 
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ ...springTransition, delay: 0.1 }}
+              className="w-full"
             >
               <div 
-                className="w-full relative transition-transform duration-700 ease-in-out h-full"
+                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[500px] md:min-h-[650px] xl:min-h-[700px]"
                 style={{
+                  perspective: "2000px",
                   transformStyle: "preserve-3d",
-                  transform: isCardFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  transform: flipIC ? "rotateY(180deg)" : "rotateY(0deg)",
                 }}
+                onClick={() => setFlipIC(!flipIC)}
               >
-                
-                {/* FRENTE: INFORMAÇÕES DO MÓDULO */}
-                <article 
-                  className={`module-detail module-detail--${currentModule.color}`}
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <div className="module-detail__top">
-                    <span className="module-detail__tag">{currentModule.tag}</span>
-                    <span className="module-detail__id">NXS / {currentModule.index}</span>
-                  </div>
-                  
-                  <div className="module-detail__title-row">
-                    <div>
-                      <CurrentIcon size={24} strokeWidth={1.5} />
-                      <h3>{currentModule.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3>
+                {/* FRENTE: IMAGEM */}
+                <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
+                    <img src={modules[0].image} alt="Painel Intercompany" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
+                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
+                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-blue-700 rounded-full shadow-2xl border border-blue-100 animate-pulse">
+                        CLIQUE PARA VER INFORMAÇÕES
+                       </span>
                     </div>
-                    {/* Indicador visual sugerindo clique */}
-                    <span className="px-3 py-1 bg-gray-100 text-[10px] uppercase font-bold tracking-widest text-gray-500 rounded-full animate-pulse border border-gray-200">
-                      CLIQUE PARA VER A TELA
-                    </span>
+                  </div>
+                </div>
+
+                {/* VERSO: CARTÃO DE DADOS (RESTAURADO) */}
+                <article 
+                  className={`module-detail module-detail--${modules[0].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
+                >
+                  <div className="module-detail__top shrink-0">
+                    <span className="module-detail__tag">{modules[0].tag}</span>
+                    <span className="module-detail__id">NXS / {modules[0].index}</span>
                   </div>
                   
-                  <p className="module-detail__description">{currentModule.description}</p>
+                  <div className="module-detail__title-row shrink-0">
+                    <div>
+                      <IconIC size={32} strokeWidth={1.5} />
+                      <h3 className="text-4xl">{modules[0].title.split("\n").map((line, i) => <span key={i}>{line}</span>)}</h3>
+                    </div>
+                  </div>
+
+                  <p className="module-detail__description text-lg mt-4 shrink-0">{modules[0].description}</p>
                   
-                  <div className="module-readout">
-                    <div><span>LEITURA PRINCIPAL</span><strong>{selectedModule === "intercompany" ? "Antecipar o atraso antes que ele vire problema." : "Visibilidade completa, do estoque até a entrega."}</strong></div>
-                    <div><span>IMPACTO OPERACIONAL</span><strong>{selectedModule === "intercompany" ? "Causas mapeadas e histórico para consulta." : "Mais controle sobre cobertura, reentrega e FNE."}</strong></div>
+                  <div className="module-readout mt-6 shrink-0">
+                    <div><span>LEITURA PRINCIPAL</span><strong>Antecipar o atraso antes que ele vire problema.</strong></div>
+                    <div><span>IMPACTO OPERACIONAL</span><strong>Causas mapeadas e histórico para consulta.</strong></div>
                   </div>
                   
-                  <div className="metric-grid">
-                    {currentModule.metrics.map(([label, value]) => (
+                  <div className="metric-grid mt-6 mb-6 shrink-0">
+                    {modules[0].metrics.map(([label, value]) => (
                       <div key={label}><span>{label}</span><strong>{value}</strong></div>
                     ))}
                   </div>
                   
-                  <div className="module-detail__bottom">
+                  <div className="module-detail__bottom mt-auto shrink-0">
                     <div className="detail-bullets">
-                      {currentModule.bullets.map((bullet) => (
-                        <span key={bullet}><Check size={13} /> {bullet}</span>
+                      {modules[0].bullets.map((bullet) => (
+                        <span key={bullet} className="text-[15px]"><Check size={16} /> {bullet}</span>
                       ))}
                     </div>
                     <div className="detail-visual">
@@ -365,45 +372,226 @@ export default function Home() {
                     </div>
                   </div>
                 </article>
-
-                {/* VERSO: IMAGEM DO PAINEL */}
-                <article 
-                  className={`module-detail module-detail--${currentModule.color} absolute top-0 left-0 w-full h-full`}
-                  style={{ 
-                    backfaceVisibility: "hidden", 
-                    transform: "rotateY(180deg)",
-                    padding: "0.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#f8fafc"
-                  }}
-                >
-                  <img 
-                    src={currentModule.image} 
-                    alt={`Interface do ${currentModule.title}`} 
-                    className="w-full h-full object-contain rounded-xl"
-                  />
-                  <span className="absolute bottom-4 right-6 px-3 py-1 bg-white/80 backdrop-blur text-[10px] uppercase font-bold tracking-widest text-gray-600 rounded-full shadow-sm border border-gray-200">
-                    CLIQUE PARA VOLTAR
-                  </span>
-                </article>
-
               </div>
-            </div>
+            </motion.div>
 
+            {/* CARTÕES INFERIORES LADO A LADO COM ANIMAÇÃO */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.1 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <Boxes size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Visão de Estoque</h3>
+                </div>
+                <p className="text-slate-600 text-[15px] leading-relaxed">
+                  Mapeamento completo de paletes livres, itens em quarentena, cargas disponíveis e <strong className="text-blue-900 bg-blue-50 px-1 py-0.5 rounded">negativos</strong> (pedidos gerados aguardando mercadoria). Tabela detalhada por destino, placa e material.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.25 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <Clock size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Prazos e Lead Times</h3>
+                </div>
+                <p className="text-slate-600 text-[15px] leading-relaxed">
+                  Acompanhamento minucioso de cada etapa do processo logístico: desde o tempo de <strong className="text-blue-900">Pedido × Faturado</strong>, até a liberação para Embarque e o volume total em Trânsito.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.4 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-blue-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <ShieldCheck size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Ação Preventiva</h3>
+                </div>
+                <p className="text-slate-600 text-[15px] leading-relaxed">
+                  Antecipar o atraso antes que ele vire problema. Detecção ágil para solucionar gargalos e evitar desabastecimento, com rastreio profundo de falhas de transporte e faturamento.
+                </p>
+              </motion.div>
+
+            </div>
           </div>
         </div>
       </section>
 
+
+      {/* ========================================= */}
+      {/* 2. SEÇÃO: TORRE DE AMOSTRAS */}
+      {/* ========================================= */}
+      <section id="amostras" className="relative pt-24 pb-24 bg-gradient-to-b from-white via-cyan-50/40 to-white overflow-visible">
+        <div className="container mx-auto px-4 max-w-7xl">
+          
+          <div className="section-heading mb-12 reveal-on-scroll">
+            <div>
+              <div className="section-kicker text-cyan-600">/ NXS-02 : RASTREABILIDADE TOTAL</div>
+              <h2>
+                <span className="text-reveal-mask">Torre de</span><br />
+                <em><span className="text-reveal-mask text-cyan-900">Amostra Grátis.</span></em>
+              </h2>
+            </div>
+            <span className="heading-index text-cyan-800">DISTRIBUIÇÃO<br /><b>860 MIL+ CX</b></span>
+          </div>
+
+          <div className="flex flex-col gap-12 items-start relative">
+            
+            {/* CARTÃO SUPERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
+            <motion.div 
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ ...springTransition, delay: 0.1 }}
+              className="w-full"
+            >
+              <div 
+                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[500px] md:min-h-[650px] xl:min-h-[700px]"
+                style={{
+                  perspective: "2000px",
+                  transformStyle: "preserve-3d",
+                  transform: flipAG ? "rotateY(180deg)" : "rotateY(0deg)",
+                }}
+                onClick={() => setFlipAG(!flipAG)}
+              >
+                {/* FRENTE: IMAGEM */}
+                <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
+                    <img src={modules[1].image} alt="Torre de Amostras Grátis" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
+                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
+                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-cyan-700 rounded-full shadow-2xl border border-cyan-100 animate-pulse">
+                        CLIQUE PARA VER INFORMAÇÕES
+                       </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* VERSO: CARTÃO DE DADOS (RESTAURADO) */}
+                <article 
+                  className={`module-detail module-detail--${modules[1].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
+                >
+                  <div className="module-detail__top shrink-0">
+                    <span className="module-detail__tag">{modules[1].tag}</span>
+                    <span className="module-detail__id">NXS / {modules[1].index}</span>
+                  </div>
+                  
+                  <div className="module-detail__title-row shrink-0">
+                    <div>
+                      <IconAG size={32} strokeWidth={1.5} />
+                      <h3 className="text-4xl">{modules[1].title.split("\n").map((line, i) => <span key={i}>{line}</span>)}</h3>
+                    </div>
+                  </div>
+
+                  <p className="module-detail__description text-lg mt-4 shrink-0">{modules[1].description}</p>
+                  
+                  <div className="module-readout mt-6 shrink-0">
+                    <div><span>LEITURA PRINCIPAL</span><strong>Visibilidade completa, do estoque até a entrega.</strong></div>
+                    <div><span>IMPACTO OPERACIONAL</span><strong>Monitoramento de OCT, NFs em atraso e redução de reentregas.</strong></div>
+                  </div>
+                  
+                  <div className="metric-grid mt-8 mb-8 shrink-0">
+                    {modules[1].metrics.map(([label, value]) => (
+                      <div key={label}><span>{label}</span><strong>{value}</strong></div>
+                    ))}
+                  </div>
+                  
+                  <div className="module-detail__bottom mt-auto shrink-0">
+                    <div className="detail-bullets">
+                      {modules[1].bullets.map((bullet) => (
+                        <span key={bullet} className="text-[15px]"><Check size={16} /> {bullet}</span>
+                      ))}
+                    </div>
+                    <div className="detail-visual">
+                      <div className="mini-bars"><i /><i /><i /><i /><i /><i /><i /></div>
+                      <div className="mini-line"><span /><span /><span /><span /><span /><span /><span /></div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </motion.div>
+
+            {/* CARTÕES QUE ROLAM NA DIREITA COM ANIMAÇÃO */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.1 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <Warehouse size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Visão Cajamar e Estoque</h3>
+                </div>
+                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
+                  <p>Acompanhamento de % de ocupação do galpão, <strong>shelf life</strong> e cobertura.</p>
+                  <p>Consolidação da rede dividida por status (Livre, Quarentena, Restrito e Bloqueado) com detalhamento exato por produto.</p>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.25 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <Truck size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Gestão de Entregas e FNE</h3>
+                </div>
+                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
+                  <p>Monitoramento de entregas, reentregas e <strong>OCT (Order Cycle Time)</strong>. Análise de performance por representante.</p>
+                  <p>Visão detalhada de faturados não entregues, e volume de NFs atrasadas/no prazo.</p>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.4 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-cyan-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <AlertTriangle size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">Diagnósticos Logísticos</h3>
+                </div>
+                <ul className="text-slate-600 text-[15px] leading-relaxed list-disc pl-5 space-y-2">
+                  <li>Mapeamento de lotes que levaram até 252 dias para liberação da quarentena.</li>
+                  <li>Mais de 860 mil caixas entregues e rastreadas pelo painel em 2025.</li>
+                </ul>
+              </motion.div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* IMPACTO CONSOLIDADO */}
       <section className="flow-section container reveal-on-scroll" id="fluxo">
         <div className="section-heading"><div><div className="section-kicker">/ IMPACTO CONSOLIDADO</div>
-        
         <h2>
-          <span className="text-reveal-mask">Dois projetos,</span><br />
+          <span className="text-reveal-mask">Múltiplos projetos,</span><br />
           <em><span className="text-reveal-mask">um mesmo efeito.</span></em>
         </h2>
-        
         </div><p className="heading-description">Decisão mais rápida para o Comercial, Financeiro, Qualidade e Logística — com dado confiável em uma única visão sistêmica.</p></div>
         <div className="flow-map">
           <div className="flow-line"><span /><span /><span /><span /></div>
@@ -415,15 +603,16 @@ export default function Home() {
         <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Comercial, Financeiro, Qualidade e Logística.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
       </section>
 
-      <section className="signal-section reveal-on-scroll">
+      {/* PROJETO RITMO */}
+      <section className="signal-section reveal-on-scroll" id="ritmo">
         <div className="container signal-grid" style={{ alignItems: 'center' }}>
           <div>
-            <div className="section-kicker">/ PRÓXIMO PASSO</div>
+            <div className="section-kicker">/ VISÃO DE FUTURO</div>
             <h2>
-              <span className="text-reveal-mask">O Nexus</span><br />
-              <em><span className="text-reveal-mask">continua.</span></em>
+              <span className="text-reveal-mask">O próximo passo</span><br />
+              <em><span className="text-reveal-mask">do Nexus.</span></em>
             </h2>
-            <p>Conheça o Ritmo: uma plataforma para o gestor acompanhar atividades em tempo real, com formato gamificado e ranking dos analistas mais bem colocados.</p>
+            <p>Com o Painel Intercompany e a Torre de AG 100% concluídos, o foco atual está no desenvolvimento do <strong>Projeto Ritmo</strong>.</p>
             <button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button>
           </div>
           
@@ -437,7 +626,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NOVO QUADRO - VÍDEO (PENÚLTIMO) */}
+      {/* VÍDEO DEMONSTRAÇÃO */}
       <section className="video-section container reveal-on-scroll" style={{ padding: '6rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ width: '100%', maxWidth: '900px' }}>
           <div className="section-kicker" style={{ marginBottom: '2rem' }}>/ DEMONSTRAÇÃO</div>
@@ -454,6 +643,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FECHAMENTO E ROBÔ FINAL */}
       <section className="farewell-section reveal-on-scroll" aria-label="Encerramento do Projeto Nexus">
         <div className="farewell-backdrop">NEXUS / NEXUS / NEXUS / NEXUS /</div>
         <div className="farewell-robot"><RobotCore final /></div>
@@ -467,7 +657,7 @@ export default function Home() {
         <p>“Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.”<br /><small>— São Francisco de Assis</small></p><span className="farewell-status"><i /> PROJETO NEXUS / GUILHERME DE PAULA</span></div>
       </section>
 
-      <footer className="site-footer container reveal-on-scroll"><a href="#top" className="brand"><NexusMark small /><span>PROJETO <strong>NEXUS</strong></span></a><span className="footer-center">ESTRUTURA PARA O QUE VEM A SEGUIR.</span><span className="footer-right">© 2026 / INTERNAL SYSTEM <ArrowUpRight size={14} /></span></footer>
+      <footer className="site-footer container reveal-on-scroll"><a href="#top" className="brand"><NexusMark small /><span>PROJETO <strong>NEXUS</strong></span></a><span className="footer-center">ESTRUTURA PARA O QUE VEM A SEGUIR.</span><span className="footer-right">© 2026 / HYPERA / INTERNAL SYSTEM <ArrowUpRight size={14} /></span></footer>
       <div className="system-end"><span className="system-end__line" /><span>END OF TRANSMISSION / NEXUS CORE STABLE</span><span className="system-end__line" /></div>
     </main>
   );
