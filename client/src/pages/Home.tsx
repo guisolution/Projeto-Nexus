@@ -250,7 +250,7 @@ export default function Home() {
             <span className="text-reveal-mask">Um objetivo.</span>
           </h2>
           
-          <div className="intro-note"><p>Automação de processos antes manuais, confiabilidade de dados — uma fonte única de verdade — facilidade no dia a dia operacional e uma estrutura pensada para crescer.</p><a href="#fluxo">Ver visão sistêmica <ArrowUpRight size={15} /></a></div>
+          <div className="intro-note"><p>O Projeto Nexus automatiza processos que antes eram manuais, unifica os dados em uma única fonte confiável e simplifica o dia a dia operacional, tudo isso com uma estrutura pensada para crescer.</p><a href="#fluxo">Ver visão sistêmica <ArrowUpRight size={15} /></a></div>
         </div>
         <div className="principle-row">
           <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany.</p></div>
@@ -415,7 +415,6 @@ export default function Home() {
         <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Comercial, Financeiro, Qualidade e Logística.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
       </section>
 
-      {/* SECÇÃO ATUALIZADA - RITMO COMO NA IMAGEM */}
       <section className="signal-section reveal-on-scroll">
         <div className="container signal-grid" style={{ alignItems: 'center' }}>
           <div>
@@ -437,7 +436,23 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* FIM DA SECÇÃO ATUALIZADA */}
+
+      {/* NOVO QUADRO - VÍDEO (PENÚLTIMO) */}
+      <section className="video-section container reveal-on-scroll" style={{ padding: '6rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '900px' }}>
+          <div className="section-kicker" style={{ marginBottom: '2rem' }}>/ DEMONSTRAÇÃO</div>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)', backgroundColor: '#000' }}>
+            <video 
+              width="100%" 
+              controls 
+              className="w-full object-cover"
+            >
+              <source src="/video-apresentacao.mp4" type="video/mp4" />
+              Seu navegador não suporta a reprodução de vídeos.
+            </video>
+          </div>
+        </div>
+      </section>
 
       <section className="farewell-section reveal-on-scroll" aria-label="Encerramento do Projeto Nexus">
         <div className="farewell-backdrop">NEXUS / NEXUS / NEXUS / NEXUS /</div>
