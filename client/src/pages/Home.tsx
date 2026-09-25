@@ -49,6 +49,7 @@ const modules = [
       "Negativos: pedido feito sem mercadoria disponível",
       "Causas: transporte, faturamento e NF",
     ],
+    description: "Ferramenta automática para acompanhar o fluxo e garantir a governança de cargas."
   },
   {
     id: "samples",
@@ -70,6 +71,7 @@ const modules = [
       "Filtros por ocorrência, período e representante",
       "NFs atrasadas × no prazo × total",
     ],
+    description: "Controle em tempo real de todo o ciclo logístico das amostras grátis na Hypera."
   },
 ];
 
@@ -181,7 +183,7 @@ export default function Home() {
     }
   };
 
-  const springTransition = { duration: 0.9, ease: [0.16, 1, 0.3, 1] };
+  const springTransition = { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const };
 
   return (
     <main className="nexus-page bg-slate-50">
@@ -215,7 +217,7 @@ export default function Home() {
           <button onClick={() => scrollTo("intercompany")}>Intercompany</button>
           <button onClick={() => scrollTo("amostras")}>Amostras</button>
         </nav>
-        <button className="header-index" onClick={() => scrollTo("ritmo")}>
+        <button className="header-index" onClick={() => scrollTo("monitor")}>
           <span>VER O FUTURO</span><ArrowUpRight size={15} />
         </button>
       </header>
@@ -225,9 +227,9 @@ export default function Home() {
           <div className="eyebrow"><span className="eyebrow-dot" /> GUILHERME DE PAULA / 24 ANOS</div>
           <h1>
             <span className="text-reveal-mask">Inteligência e</span><br />
-            <em><span className="text-reveal-mask">automação logística.</span></em>
+            <em><span className="text-reveal-mask">automação de indicadores.</span></em>
           </h1>
-          <p className="hero-lede">Estágio em Engenharia de Software. Objetivo: Apresentar a evolução dos projetos de automação e inteligência logística desenvolvidos na Hypera.</p>
+          <p className="hero-lede">Objetivo: Apresentar a evolução dos projetos de automação e inteligência logística.</p>
           <div className="hero-actions">
             <button className="button button--primary" onClick={() => scrollTo("nucleo")}>Conhecer o ecossistema <ArrowRight size={16} /></button>
             <button className="button button--text" onClick={() => scrollTo("intercompany")}>Ver soluções <ArrowDownRight size={16} /></button>
@@ -266,14 +268,14 @@ export default function Home() {
           <h2>
             <span className="text-reveal-mask">Ecossistema de</span><br />
             <span><span className="text-reveal-mask">automação</span></span><br />
-            <span className="text-reveal-mask">logística.</span>
+            <span className="text-reveal-mask">de Indicadores.</span>
           </h2>
-          <div className="intro-note"><p>Nome e conceito criado para agrupar os projetos desenvolvidos, unificando as soluções em um ecossistema focado na melhoria contínua dos processos logísticos da Hypera.</p></div>
+          <div className="intro-note"><p>Nexus foi o nome escolhido para o ecossistema que integra o Painel Intercompany e a Torre de AG, ferramentas criadas com o objetivo de melhorar a nossa rotina operacional.</p></div>
         </div>
         <div className="principle-row">
           <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany.</p></div>
           <div><span>02</span><strong>Concluído</strong><p>Torre de Amostra Grátis.</p></div>
-          <div><span>03</span><strong>Em desenvolvimento</strong><p>Projeto Ritmo.</p></div>
+          <div><span>03</span><strong>Em desenvolvimento</strong><p>Monitor de Indicador.</p></div>
         </div>
       </section>
 
@@ -312,7 +314,8 @@ export default function Home() {
                 </div>
                 <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
                   <p><strong>Conceito & Automação:</strong> Ferramenta automática de cargas intercompany.</p>
-                  <p><strong>Funcionamento:</strong> Sistema 100% automático, atualiza 4 vezes ao dia, com envio por e-mail, integração ao Power BI e histórico completo.</p>
+                  <p><strong>Funcionamento:</strong> Sistema 100% automático que atualiza 4 vezes ao dia, com envio por e-mail, integração ao Power BI e histórico completo para consultas e auditoria.</p>
+                  <p><strong>Escopo:</strong> Traz informações somente de cargas intercompany.</p>
                 </div>
               </motion.div>
 
@@ -345,8 +348,8 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-slate-900">A Solução e Impacto</h3>
                 </div>
                 <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
-                  <li><strong>Automação:</strong> O analista já começa a jornada com a informação completa.</li>
-                  <li><strong>Rastreabilidade de Prazos:</strong> Pedido ➔ Faturado ➔ Embarque ➔ Trânsito ➔ Entrega.</li>
+                  <li><strong>Automação:</strong> Processo de extração e cruzamento de dados automático, permitindo que o analista já comece a jornada de trabalho com a informação completa.</li>
+                  <li><strong>Rastreabilidade de Prazos:</strong> Acompanhamento minucioso do Lead Time: Pedido ➔ Faturado ➔ Embarque ➔ Trânsito ➔ Entrega.</li>
                   <li><strong>Detecção Preventiva:</strong> Permite antecipar os atrasos de entrega antes que aconteçam, identificando gargalos para evitar o desabastecimento.</li>
                 </ul>
               </motion.div>
@@ -370,29 +373,10 @@ export default function Home() {
                 }}
                 onClick={() => setFlipIC(!flipIC)}
               >
-                {/* FRENTE: IMAGEM */}
-                <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
-                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
-                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/intercompany/dashboard</span>
-                  </div>
-                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
-                    <img src={modules[0].image} alt="Painel Intercompany" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
-                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
-                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-blue-700 rounded-full shadow-2xl border border-blue-100 animate-pulse">
-                        CLIQUE PARA VER INFORMAÇÕES
-                       </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* VERSO: CARTÃO DE DADOS */}
+                {/* FRENTE: CARTÃO DE DADOS */}
                 <article 
                   className={`module-detail module-detail--${modules[0].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
-                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
+                  style={{ backfaceVisibility: "hidden", boxSizing: "border-box" }}
                 >
                   <div className="module-detail__top shrink-0">
                     <span className="module-detail__tag">{modules[0].tag}</span>
@@ -431,6 +415,26 @@ export default function Home() {
                     </div>
                   </div>
                 </article>
+
+                {/* VERSO: IMAGEM DO PAINEL */}
+                <div style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
+                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/intercompany/dashboard</span>
+                  </div>
+                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
+                    <img src={modules[0].image} alt="Painel Intercompany" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
+                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
+                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-blue-700 rounded-full shadow-2xl border border-blue-100 animate-pulse hover:bg-blue-50 transition-colors">
+                        VOLTAR PARA INFORMAÇÕES
+                       </span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </motion.div>
 
@@ -458,8 +462,8 @@ export default function Home() {
 
           <div className="flex flex-col gap-12 items-start relative">
             
-            {/* CARTÕES SUPERIORES LADO A LADO COM ANIMAÇÃO */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* CARTÕES SUPERIORES LADO A LADO COM ANIMAÇÃO EM CASCATA */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
               
               <motion.div 
                 initial={{ opacity: 0, y: 50 }}
@@ -472,9 +476,9 @@ export default function Home() {
                   <Warehouse size={24} strokeWidth={2} />
                   <h3 className="text-xl font-bold text-slate-900">O que é a Torre de AG?</h3>
                 </div>
-                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
-                  <p>Ferramenta de controle para acompanhamento de boa parte do ciclo de vida do produto de Amostra Grátis, da fábrica ao representante.</p>
-                  <p><strong>Abas:</strong> Visão Cajamar (armazenagem), Estoque nos CDs, Distribuição/Atendimento e FNE (Faturado Não Entregue).</p>
+                <div className="text-slate-600 text-[14px] leading-relaxed space-y-3">
+                  <p>Ferramenta de controle para acompanhamento de boa parte do ciclo de vida do produto de Amostra Grátis.</p>
+                  <p><strong>Estrutura por Abas:</strong> Dividida em Visão Cajamar (armazenagem), Estoque nos CDs, Distribuição/Atendimento e FNE.</p>
                 </div>
               </motion.div>
 
@@ -491,7 +495,7 @@ export default function Home() {
                 </div>
                 <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
                   <li>Não existia uma ferramenta ou indicador consolidado que trouxesse visibilidade sobre as amostras grátis.</li>
-                  <li><strong>Desconhecimento de Gargalos:</strong> Dificuldade em monitorar tempos de retenção, ocupação de Cajamar e falhas na distribuição.</li>
+                  <li><strong>Desconhecimento de Gargalos:</strong> Dificuldade em monitorar tempos de retenção, detalhamento da ocupação de Cajamar e falhas na distribuição.</li>
                 </ul>
               </motion.div>
 
@@ -507,15 +511,16 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-slate-900">A Solução e Impacto</h3>
                 </div>
                 <ul className="text-slate-600 text-[13px] leading-relaxed list-disc pl-5 space-y-1">
-                  <li><strong>Visibilidade:</strong> Status do estoque, shelf life, cobertura e gestão do OCT.</li>
-                  <li><strong>Retenção em Quarentena:</strong> Mapeamento de lotes retidos por até 252 dias.</li>
-                  <li><strong>Ineficiências:</strong> Identificação de 120.832 caixas em reentrega e localização de 832 cargas em atraso.</li>
+                  <li><strong>Extração Automatizada:</strong> Do SAP para o Power BI, trazendo status do estoque, shelf life e OCT.</li>
+                  <li><strong>Diagnósticos:</strong> lotes retidos por até 252 dias em quarentena e produtos com 88 dias no estoque.</li>
+                  <li><strong>Volume:</strong> Mais de 860 mil caixas entregues rastreadas em 2025.</li>
+                  <li><strong>Ineficiências:</strong> Identificação de 120.832 caixas em reentrega e 832 que ainda não foi entregue.</li>
                 </ul>
               </motion.div>
 
             </div>
 
-            {/* CARTÃO INFERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
+            {/* CARTÃO INFERIOR GIGANTE: EFEITO FLIP */}
             <motion.div 
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -532,29 +537,10 @@ export default function Home() {
                 }}
                 onClick={() => setFlipAG(!flipAG)}
               >
-                {/* FRENTE: IMAGEM */}
-                <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
-                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
-                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/amostras/dashboard</span>
-                  </div>
-                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
-                    <img src={modules[1].image} alt="Torre de Amostras Grátis" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
-                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
-                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-cyan-700 rounded-full shadow-2xl border border-cyan-100 animate-pulse">
-                        CLIQUE PARA VER INFORMAÇÕES
-                       </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* VERSO: CARTÃO DE DADOS */}
+                {/* FRENTE: CARTÃO DE DADOS */}
                 <article 
                   className={`module-detail module-detail--${modules[1].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
-                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
+                  style={{ backfaceVisibility: "hidden", boxSizing: "border-box" }}
                 >
                   <div className="module-detail__top shrink-0">
                     <span className="module-detail__tag">{modules[1].tag}</span>
@@ -593,6 +579,26 @@ export default function Home() {
                     </div>
                   </div>
                 </article>
+
+                {/* VERSO: IMAGEM DO PAINEL */}
+                <div style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
+                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/amostras/dashboard</span>
+                  </div>
+                  <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
+                    <img src={modules[1].image} alt="Torre de Amostras Grátis" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
+                    <div className="absolute bottom-8 w-full flex justify-center pointer-events-none">
+                       <span className="px-6 py-3 bg-white/95 backdrop-blur text-xs uppercase font-bold tracking-widest text-cyan-700 rounded-full shadow-2xl border border-cyan-100 animate-pulse hover:bg-cyan-50 transition-colors">
+                        VOLTAR PARA INFORMAÇÕES
+                       </span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </motion.div>
 
@@ -607,7 +613,7 @@ export default function Home() {
           <span className="text-reveal-mask">Múltiplos projetos,</span><br />
           <em><span className="text-reveal-mask">um mesmo efeito.</span></em>
         </h2>
-        </div><p className="heading-description">Decisão mais rápida para o Comercial, Financeiro, Qualidade e Logística — com dado confiável em uma única visão sistêmica.</p></div>
+        </div><p className="heading-description">Uma análise mais rápida para o Comercial, Marketing, Qualidade, Logística e demais áreas, com dados confiáveis e centralizados em uma única visão sistêmica.</p></div>
         <div className="flow-map">
           <div className="flow-line"><span /><span /><span /><span /></div>
           <FlowNode icon={Database} label="SAP" detail="fonte operacional" active />
@@ -618,25 +624,107 @@ export default function Home() {
         <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Comercial, Financeiro, Qualidade e Logística.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
       </section>
 
-      {/* PROJETO RITMO */}
-      <section className="signal-section reveal-on-scroll" id="ritmo">
-        <div className="container signal-grid" style={{ alignItems: 'center' }}>
-          <div>
-            <div className="section-kicker">/ VISÃO DE FUTURO</div>
-            <h2>
-              <span className="text-reveal-mask">O próximo passo</span><br />
-              <em><span className="text-reveal-mask">do Nexus.</span></em>
-            </h2>
-            <p>Com o Painel Intercompany e a Torre de AG 100% concluídos, o foco atual está no desenvolvimento do <strong>Projeto Ritmo</strong>.</p>
-            <button className="button button--dark" onClick={() => scrollTo("top")}>Voltar ao início <ArrowUpRight size={16} /></button>
-          </div>
+      {/* PROJETO RITMO / MONITOR DE INDICADORES */}
+      <section className="signal-section py-32 overflow-hidden" id="monitor">
+        <div className="container mx-auto px-4 max-w-7xl flex flex-col lg:flex-row items-center gap-16">
           
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', paddingLeft: '2rem' }}>
-            <img 
-              src="/Ritmo.png" 
-              alt="Plataforma Ritmo" 
-              style={{ width: '100%', maxWidth: '750px', borderRadius: '12px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)' }}
-            />
+          {/* TEXTOS (ESQUERDA) */}
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ ...springTransition, delay: 0.1 }}
+            className="w-full lg:w-1/2"
+          >
+            <div className="text-indigo-700 font-mono text-sm tracking-widest uppercase mb-6 font-semibold">/ VISÃO DE FUTURO</div>
+            <h2 className="text-5xl md:text-6xl lg:text-[70px] font-extrabold tracking-tight leading-[1.1] mb-8">
+              <span className="text-slate-900 block">O próximo</span>
+              <span className="text-slate-900 block">passo:</span>
+              <span className="text-indigo-700 block mt-2">Monitor de</span>
+              <span className="text-indigo-700 block">Indicadores.</span>
+            </h2>
+            <p className="text-slate-600 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
+              Com o Painel Intercompany e a Torre de AG 100% concluídos, o foco atual está no desenvolvimento do <strong>Monitor de Indicadores</strong>, que se atualiza em tempo real ao longo do dia para avisar proativamente quais indicadores ainda não foram realizados.
+            </p>
+            <button className="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-widest text-sm hover:text-indigo-700 transition-colors border-b-2 border-slate-900 hover:border-indigo-700 pb-1 cursor-pointer" onClick={() => scrollTo("top")}>
+              Voltar ao início <ArrowUpRight size={16} />
+            </button>
+          </motion.div>
+          
+          {/* GRÁFICO ANIMADO (DIREITA) */}
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+             <div className="w-full max-w-[600px] h-[350px] bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] border border-slate-200 p-8 relative flex flex-col justify-end overflow-hidden group">
+               
+               {/* Linhas de Grade (Background) */}
+               <div className="absolute inset-0 flex flex-col justify-between py-10 px-8 pointer-events-none opacity-20">
+                 <div className="border-b border-slate-400 w-full h-px"></div>
+                 <div className="border-b border-slate-400 w-full h-px"></div>
+                 <div className="border-b border-slate-400 w-full h-px"></div>
+                 <div className="border-b border-slate-400 w-full h-px"></div>
+               </div>
+
+               <svg className="w-full h-[220px] overflow-visible relative z-10" viewBox="0 0 400 200" preserveAspectRatio="none">
+                 <defs>
+                   <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                     <stop offset="0%" stopColor="#4f46e5" />
+                     <stop offset="100%" stopColor="#06b6d4" />
+                   </linearGradient>
+                   <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                     <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.2" />
+                     <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
+                   </linearGradient>
+                 </defs>
+                 
+                 {/* Área preenchida sob a linha animada */}
+                 <motion.path 
+                   d="M 0 180 C 100 170 150 110 200 120 C 250 130 300 40 400 30 L 400 200 L 0 200 Z"
+                   fill="url(#areaGradient)"
+                   initial={{ opacity: 0 }}
+                   whileInView={{ opacity: 1 }}
+                   viewport={{ once: true }}
+                   transition={{ duration: 1.5, delay: 0.5 }}
+                 />
+
+                 {/* Linha principal animada fluida */}
+                 <motion.path
+                   d="M 0 180 C 100 170 150 110 200 120 C 250 130 300 40 400 30"
+                   fill="none"
+                   stroke="url(#chartGradient)"
+                   strokeWidth="6"
+                   strokeLinecap="round"
+                   initial={{ pathLength: 0 }}
+                   whileInView={{ pathLength: 1 }}
+                   viewport={{ once: true }}
+                   transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+                 />
+
+                 {/* Ponto Final / Marker dentro do SVG para escalar perfeitamente */}
+                 <motion.circle
+                    cx="400"
+                    cy="30"
+                    r="8"
+                    fill="white"
+                    stroke="#06b6d4"
+                    strokeWidth="4"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 2, type: "spring" }}
+                 />
+               </svg>
+               
+               {/* Tooltip do Gráfico flutuante */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 15 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ delay: 2.2, type: "spring" }}
+                 className="absolute bg-slate-900 text-white text-sm font-bold py-2.5 px-4 rounded-xl shadow-2xl z-30 flex items-center gap-2 right-4 top-10"
+               >
+                 <Activity size={16} className="text-cyan-400" />
+                 Evolução Contínua
+               </motion.div>
+             </div>
           </div>
         </div>
       </section>
