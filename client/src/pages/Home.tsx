@@ -27,15 +27,13 @@ import {
   Truck
 } from "lucide-react";
 
-// Dados RESTAURADOS com as descrições originais
+// Dados para os versos dos cartões
 const modules = [
   {
     id: "intercompany",
     index: "01",
     tag: "OPERAÇÃO & VISIBILIDADE",
     title: "Painel\nIntercompany",
-    description:
-      "Painel 100% automático, atualizado 4x ao dia e disponível por e-mail e Power BI para antecipar o atraso antes que ele vire problema.",
     color: "blue",
     icon: Boxes,
     image: "/painelic.png",
@@ -57,14 +55,12 @@ const modules = [
     index: "02",
     tag: "PLANEJAMENTO & CONTROLE",
     title: "Torre de\nAmostra Grátis",
-    description:
-      "Visibilidade completa, do estoque até a entrega, acompanhando quarentena, shelf life, distribuição, reentrega e FNE.",
     color: "cyan",
     icon: Warehouse,
     image: "/torreag.png",
     metrics: [
-      ["Entregues", "860 mil+ caixas"],
-      ["Reentrega", "120.832 caixas"],
+      ["Entregues", "860 mil+ cx"],
+      ["Reentrega", "120.832 cx"],
       ["Atrasos", "832 cargas"],
     ],
     bullets: [
@@ -185,7 +181,7 @@ export default function Home() {
     }
   };
 
-  const springTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+  const springTransition = { duration: 0.9, ease: [0.16, 1, 0.3, 1] };
 
   return (
     <main className="nexus-page bg-slate-50">
@@ -298,18 +294,75 @@ export default function Home() {
             <span className="heading-index text-blue-800">ATUALIZAÇÃO<br /><b>04X / DIA</b></span>
           </div>
 
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-10">
             
-            {/* CARTÃO SUPERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
+            {/* CARTÕES SUPERIORES LADO A LADO COM ANIMAÇÃO */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.1 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <Boxes size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">O que é o Painel?</h3>
+                </div>
+                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
+                  <p><strong>Conceito & Automação:</strong> Ferramenta automática de cargas intercompany.</p>
+                  <p><strong>Funcionamento:</strong> Sistema 100% automático, atualiza 4 vezes ao dia, com envio por e-mail, integração ao Power BI e histórico completo.</p>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.25 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <AlertTriangle size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">O Problema</h3>
+                </div>
+                <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
+                  <li><strong>Falta de Padronização no SAP:</strong> Não existia um relatório pronto que consolidasse todas as informações necessárias para a equipe logística.</li>
+                  <li><strong>Trabalho Manual e Lento:</strong> Exigia tempo e esforço operacional para extrair múltiplos arquivos e cruzar dados.</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.4 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-blue-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-blue-700">
+                  <ShieldCheck size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">A Solução e Impacto</h3>
+                </div>
+                <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
+                  <li><strong>Automação:</strong> O analista já começa a jornada com a informação completa.</li>
+                  <li><strong>Rastreabilidade de Prazos:</strong> Pedido ➔ Faturado ➔ Embarque ➔ Trânsito ➔ Entrega.</li>
+                  <li><strong>Detecção Preventiva:</strong> Permite antecipar os atrasos de entrega antes que aconteçam, identificando gargalos para evitar o desabastecimento.</li>
+                </ul>
+              </motion.div>
+
+            </div>
+
+            {/* CARTÃO INFERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
             <motion.div 
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ ...springTransition, delay: 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ ...springTransition, delay: 0.2 }}
               className="w-full"
             >
               <div 
-                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[500px] md:min-h-[650px] xl:min-h-[700px]"
+                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[400px] md:min-h-[500px] xl:min-h-[700px]"
                 style={{
                   perspective: "2000px",
                   transformStyle: "preserve-3d",
@@ -319,6 +372,12 @@ export default function Home() {
               >
                 {/* FRENTE: IMAGEM */}
                 <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
+                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/intercompany/dashboard</span>
+                  </div>
                   <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
                     <img src={modules[0].image} alt="Painel Intercompany" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
@@ -330,7 +389,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* VERSO: CARTÃO DE DADOS (RESTAURADO) */}
+                {/* VERSO: CARTÃO DE DADOS */}
                 <article 
                   className={`module-detail module-detail--${modules[0].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
@@ -375,58 +434,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* CARTÕES INFERIORES LADO A LADO COM ANIMAÇÃO */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.1 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-blue-700">
-                  <Boxes size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Visão de Estoque</h3>
-                </div>
-                <p className="text-slate-600 text-[15px] leading-relaxed">
-                  Mapeamento completo de paletes livres, itens em quarentena, cargas disponíveis e <strong className="text-blue-900 bg-blue-50 px-1 py-0.5 rounded">negativos</strong> (pedidos gerados aguardando mercadoria). Tabela detalhada por destino, placa e material.
-                </p>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.25 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-blue-700">
-                  <Clock size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Prazos e Lead Times</h3>
-                </div>
-                <p className="text-slate-600 text-[15px] leading-relaxed">
-                  Acompanhamento minucioso de cada etapa do processo logístico: desde o tempo de <strong className="text-blue-900">Pedido × Faturado</strong>, até a liberação para Embarque e o volume total em Trânsito.
-                </p>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.4 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-blue-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-blue-700">
-                  <ShieldCheck size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Ação Preventiva</h3>
-                </div>
-                <p className="text-slate-600 text-[15px] leading-relaxed">
-                  Antecipar o atraso antes que ele vire problema. Detecção ágil para solucionar gargalos e evitar desabastecimento, com rastreio profundo de falhas de transporte e faturamento.
-                </p>
-              </motion.div>
-
-            </div>
           </div>
         </div>
       </section>
@@ -451,16 +458,73 @@ export default function Home() {
 
           <div className="flex flex-col gap-12 items-start relative">
             
-            {/* CARTÃO SUPERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
+            {/* CARTÕES SUPERIORES LADO A LADO COM ANIMAÇÃO */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.1 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <Warehouse size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">O que é a Torre de AG?</h3>
+                </div>
+                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
+                  <p>Ferramenta de controle para acompanhamento de boa parte do ciclo de vida do produto de Amostra Grátis, da fábrica ao representante.</p>
+                  <p><strong>Abas:</strong> Visão Cajamar (armazenagem), Estoque nos CDs, Distribuição/Atendimento e FNE (Faturado Não Entregue).</p>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.25 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <AlertTriangle size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">O Problema</h3>
+                </div>
+                <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
+                  <li>Não existia uma ferramenta ou indicador consolidado que trouxesse visibilidade sobre as amostras grátis.</li>
+                  <li><strong>Desconhecimento de Gargalos:</strong> Dificuldade em monitorar tempos de retenção, ocupação de Cajamar e falhas na distribuição.</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ ...springTransition, delay: 0.4 }}
+                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-cyan-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-3 mb-4 text-cyan-700">
+                  <ChartNoAxesCombined size={24} strokeWidth={2} />
+                  <h3 className="text-xl font-bold text-slate-900">A Solução e Impacto</h3>
+                </div>
+                <ul className="text-slate-600 text-[13px] leading-relaxed list-disc pl-5 space-y-1">
+                  <li><strong>Visibilidade:</strong> Status do estoque, shelf life, cobertura e gestão do OCT.</li>
+                  <li><strong>Retenção em Quarentena:</strong> Mapeamento de lotes retidos por até 252 dias.</li>
+                  <li><strong>Ineficiências:</strong> Identificação de 120.832 caixas em reentrega e localização de 832 cargas em atraso.</li>
+                </ul>
+              </motion.div>
+
+            </div>
+
+            {/* CARTÃO INFERIOR GIGANTE: IMAGEM + EFEITO FLIP */}
             <motion.div 
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ ...springTransition, delay: 0.1 }}
+              transition={{ ...springTransition, delay: 0.2 }}
               className="w-full"
             >
               <div 
-                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[500px] md:min-h-[650px] xl:min-h-[700px]"
+                className="w-full relative transition-transform duration-700 ease-in-out shadow-2xl rounded-2xl cursor-pointer min-h-[400px] md:min-h-[500px] xl:min-h-[700px]"
                 style={{
                   perspective: "2000px",
                   transformStyle: "preserve-3d",
@@ -470,6 +534,12 @@ export default function Home() {
               >
                 {/* FRENTE: IMAGEM */}
                 <div style={{ backfaceVisibility: "hidden" }} className="absolute inset-0 w-full h-full bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden flex flex-col">
+                  <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-2 shrink-0">
+                     <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                     <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                     <span className="ml-4 text-xs font-mono text-slate-500">nexus/amostras/dashboard</span>
+                  </div>
                   <div className="relative flex-1 p-2 flex items-center justify-center bg-slate-50">
                     <img src={modules[1].image} alt="Torre de Amostras Grátis" className="w-full h-full object-contain rounded-lg shadow-sm border border-slate-200/60" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none rounded-b-2xl"></div>
@@ -481,7 +551,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* VERSO: CARTÃO DE DADOS (RESTAURADO) */}
+                {/* VERSO: CARTÃO DE DADOS */}
                 <article 
                   className={`module-detail module-detail--${modules[1].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", boxSizing: "border-box" }}
@@ -526,61 +596,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* CARTÕES QUE ROLAM NA DIREITA COM ANIMAÇÃO */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.1 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-cyan-700">
-                  <Warehouse size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Visão Cajamar e Estoque</h3>
-                </div>
-                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
-                  <p>Acompanhamento de % de ocupação do galpão, <strong>shelf life</strong> e cobertura.</p>
-                  <p>Consolidação da rede dividida por status (Livre, Quarentena, Restrito e Bloqueado) com detalhamento exato por produto.</p>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.25 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-cyan-700">
-                  <Truck size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Gestão de Entregas e FNE</h3>
-                </div>
-                <div className="text-slate-600 text-[15px] leading-relaxed space-y-3">
-                  <p>Monitoramento de entregas, reentregas e <strong>OCT (Order Cycle Time)</strong>. Análise de performance por representante.</p>
-                  <p>Visão detalhada de faturados não entregues, e volume de NFs atrasadas/no prazo.</p>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ ...springTransition, delay: 0.4 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200 border-t-4 border-t-cyan-600 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-              >
-                <div className="flex items-center gap-3 mb-4 text-cyan-700">
-                  <AlertTriangle size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">Diagnósticos Logísticos</h3>
-                </div>
-                <ul className="text-slate-600 text-[15px] leading-relaxed list-disc pl-5 space-y-2">
-                  <li>Mapeamento de lotes que levaram até 252 dias para liberação da quarentena.</li>
-                  <li>Mais de 860 mil caixas entregues e rastreadas pelo painel em 2025.</li>
-                </ul>
-              </motion.div>
-
-            </div>
           </div>
         </div>
       </section>
