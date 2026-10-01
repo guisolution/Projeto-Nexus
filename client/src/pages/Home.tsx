@@ -349,8 +349,6 @@ export default function Home() {
                 </div>
                 <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
                   <li><strong>Automação:</strong> Processo de extração e cruzamento de dados automático, permitindo que o analista já comece a jornada de trabalho com a informação completa.</li>
-                  <li><strong>Rastreabilidade de Prazos:</strong> Acompanhamento minucioso do Lead Time: Pedido ➔ Faturado ➔ Embarque ➔ Trânsito ➔ Entrega.</li>
-                  <li><strong>Detecção Preventiva:</strong> Permite antecipar os atrasos de entrega antes que aconteçam, identificando gargalos para evitar o desabastecimento.</li>
                 </ul>
               </motion.div>
 
@@ -494,7 +492,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-slate-900">O Problema</h3>
                 </div>
                 <ul className="text-slate-600 text-[14px] leading-relaxed list-disc pl-5 space-y-2">
-                  <li>Não existia uma ferramenta ou indicador consolidado que trouxesse visibilidade sobre as amostras grátis.</li>
+                  <li>Não existia uma ferramenta ou indicador consolidado que trouxesse informações de uma forma resumida sobre as amostras grátis.</li>
                   <li><strong>Desconhecimento de Gargalos:</strong> Dificuldade em monitorar tempos de retenção, detalhamento da ocupação de Cajamar e falhas na distribuição.</li>
                 </ul>
               </motion.div>
@@ -508,14 +506,11 @@ export default function Home() {
               >
                 <div className="flex items-center gap-3 mb-4 text-cyan-700">
                   <ChartNoAxesCombined size={24} strokeWidth={2} />
-                  <h3 className="text-xl font-bold text-slate-900">A Solução e Impacto</h3>
+                 <h3 className="text-xl font-bold text-slate-900">A Solução</h3>
                 </div>
-                <ul className="text-slate-600 text-[13px] leading-relaxed list-disc pl-5 space-y-1">
-                  <li><strong>Extração Automatizada:</strong> Do SAP para o Power BI, trazendo status do estoque, shelf life e OCT.</li>
-                  <li><strong>Diagnósticos:</strong> lotes retidos por até 252 dias em quarentena e produtos com 88 dias no estoque.</li>
-                  <li><strong>Volume:</strong> Mais de 860 mil caixas entregues rastreadas em 2025.</li>
-                  <li><strong>Ineficiências:</strong> Identificação de 120.832 caixas em reentrega e 832 que ainda não foi entregue.</li>
-                </ul>
+                <p className="text-slate-600 text-[13px] leading-relaxed">
+                  A solução consiste na criação de um indicador 100% automatizado que centraliza as informações de amostras grátis em um só lugar, proporcionando visibilidade sobre a ocupação, armazenagem, a liberação de quarentena e de distribuição.
+                </p>
               </motion.div>
 
             </div>
@@ -617,11 +612,11 @@ export default function Home() {
         <div className="flow-map">
           <div className="flow-line"><span /><span /><span /><span /></div>
           <FlowNode icon={Database} label="SAP" detail="fonte operacional" active />
-          <FlowNode icon={Cable} label="NEXUS CORE" detail="orquestra & valida" active />
+          <FlowNode icon={Cable} label="Python" detail="orquestra & valida" active />
           <FlowNode icon={ChartNoAxesCombined} label="BI" detail="indicadores vivos" active />
           <FlowNode icon={Mail} label="E-MAIL" detail="alertas e reports" />
         </div>
-        <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Comercial, Financeiro, Qualidade e Logística.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
+        <div className="flow-callout"><div className="flow-callout__icon"><Radio size={19} /></div><div><strong>Logística, Comercial, Financeiro e Marketing.</strong><span>Um mesmo efeito: decisão mais rápida, com dado confiável.</span></div><span className="flow-callout__code">NXS_IMPACT / 002</span></div>
       </section>
 
       {/* PROJETO RITMO / MONITOR DE INDICADORES */}
