@@ -37,10 +37,10 @@ const modules = [
     color: "blue",
     icon: Boxes,
     image: "/painelic.png",
-    metrics: [
-      ["Atualizações", "04x / dia"],
-      ["Saídas", "E-mail + BI"],
-      ["Histórico", "Completo"],
+    cards: [
+      { value: "100%", unit: "", label: "Automático", icon: Zap },
+      { value: "4x", unit: "ao dia", label: "Atualização", icon: Clock },
+      { value: "10", unit: "min", label: "Tempo Gasto", icon: Gauge },
     ],
     bullets: [
       "Paletes livres, quarentena e cargas disponíveis",
@@ -48,8 +48,7 @@ const modules = [
       "Pedido → faturado → embarque → lead time",
       "Negativos: pedido feito sem mercadoria disponível",
       "Causas: transporte, faturamento e NF",
-    ],
-    description: "Ferramenta automática para acompanhar o fluxo e garantir a governança de cargas."
+    ]
   },
   {
     id: "samples",
@@ -59,10 +58,10 @@ const modules = [
     color: "cyan",
     icon: Warehouse,
     image: "/torreag.png",
-    metrics: [
-      ["Entregues", "860 mil+ cx"],
-      ["Reentrega", "120.832 cx"],
-      ["Atrasos", "832 cargas"],
+    cards: [
+      { value: "100%", unit: "", label: "Automático", icon: Zap },
+      { value: "1x", unit: "ao dia", label: "Atualização Diária", icon: Clock },
+      { value: "360°", unit: "", label: "Análise Dinâmica", icon: Waypoints },
     ],
     bullets: [
       "Livre, quarentena, restrito e bloqueado",
@@ -70,8 +69,7 @@ const modules = [
       "Shelf life, carteira e cobertura de estoque",
       "Filtros por ocorrência, período e representante",
       "NFs atrasadas × no prazo × total",
-    ],
-    description: "Controle em tempo real de todo o ciclo logístico das amostras grátis na Hypera."
+    ]
   },
 ];
 
@@ -226,10 +224,10 @@ export default function Home() {
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-dot" /> GUILHERME DE PAULA / 24 ANOS</div>
           <h1>
-            <span className="text-reveal-mask">Inteligência e</span><br />
-            <em><span className="text-reveal-mask">automação de indicadores.</span></em>
+            <span className="text-reveal-mask inline-block pb-2">Inteligência e</span><br />
+            <em><span className="text-reveal-mask inline-block pb-2">automação de indicadores.</span></em>
           </h1>
-          <p className="hero-lede">Objetivo: Apresentar a evolução dos projetos de automação e inteligência logística.</p>
+          <p className="hero-lede"><strong>Objetivo:</strong> Impulsionar a automação de rotinas manuais para ganho de produtividade.</p>
           <div className="hero-actions">
             <button className="button button--primary" onClick={() => scrollTo("nucleo")}>Conhecer o ecossistema <ArrowRight size={16} /></button>
             <button className="button button--text" onClick={() => scrollTo("intercompany")}>Ver soluções <ArrowDownRight size={16} /></button>
@@ -266,11 +264,11 @@ export default function Home() {
         <div className="section-kicker">/ O CONCEITO NEXUS</div>
         <div className="intro-grid">
           <h2>
-            <span className="text-reveal-mask">Ecossistema de</span><br />
-            <span><span className="text-reveal-mask">automação</span></span><br />
-            <span className="text-reveal-mask">de Indicadores.</span>
+            <span className="text-reveal-mask inline-block pb-2">Ecossistema de</span><br />
+            <span><span className="text-reveal-mask inline-block pb-2">automação</span></span><br />
+            <span className="text-reveal-mask inline-block pb-2">de Indicadores.</span>
           </h2>
-          <div className="intro-note"><p>Nexus foi o nome escolhido para o ecossistema que integra o Painel Intercompany e a Torre de AG, ferramentas criadas com o objetivo de melhorar a nossa rotina operacional.</p></div>
+          
         </div>
         <div className="principle-row">
           <div><span>01</span><strong>Concluído</strong><p>Painel Intercompany.</p></div>
@@ -289,8 +287,8 @@ export default function Home() {
             <div>
               <div className="section-kicker text-blue-600">/ NXS-01 : AUTOMAÇÃO & GOVERNANÇA</div>
               <h2>
-                <span className="text-reveal-mask">Painel</span><br />
-                <em><span className="text-reveal-mask text-blue-900">Intercompany.</span></em>
+                <span className="text-reveal-mask inline-block pb-2">Painel</span><br />
+                <em><span className="text-reveal-mask inline-block pb-2 text-blue-900">Intercompany.</span></em>
               </h2>
             </div>
             <span className="heading-index text-blue-800">ATUALIZAÇÃO<br /><b>04X / DIA</b></span>
@@ -371,45 +369,54 @@ export default function Home() {
                 }}
                 onClick={() => setFlipIC(!flipIC)}
               >
-                {/* FRENTE: CARTÃO DE DADOS */}
+                {/* FRENTE: CARTÃO DE DADOS ESTILO MOCKUP */}
                 <article 
-                  className={`module-detail module-detail--${modules[0].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
+                  className={`module-detail module-detail--${modules[0].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col bg-white`}
                   style={{ backfaceVisibility: "hidden", boxSizing: "border-box" }}
                 >
-                  <div className="module-detail__top shrink-0">
-                    <span className="module-detail__tag">{modules[0].tag}</span>
-                    <span className="module-detail__id">NXS / {modules[0].index}</span>
+                  <div className="module-detail__top shrink-0 px-10 pt-10 pb-4">
+                    <span className="module-detail__tag font-semibold tracking-wider">{modules[0].tag}</span>
+                    <span className="module-detail__id text-slate-400">NXS / {modules[0].index}</span>
                   </div>
                   
-                  <div className="module-detail__title-row shrink-0">
-                    <div>
-                      <IconIC size={32} strokeWidth={1.5} />
-                      <h3 className="text-4xl">{modules[0].title.split("\n").map((line, i) => <span key={i}>{line}</span>)}</h3>
+                  <div className="shrink-0 px-10 flex items-center gap-6 mt-4">
+                    <div className="p-5 bg-blue-50 text-blue-600 rounded-2xl shadow-sm">
+                      <IconIC size={42} strokeWidth={1.5} />
                     </div>
+                    <h3 className="text-5xl font-extrabold text-[#111827] tracking-tight leading-tight flex flex-col">
+                      {modules[0].title.split("\n").map((line, i) => <span key={i} className="inline-block pb-2">{line}</span>)}
+                    </h3>
                   </div>
 
-                  <p className="module-detail__description text-lg mt-4 shrink-0">{modules[0].description}</p>
-                  
-                  <div className="module-readout mt-6 shrink-0">
-                    <div><span>LEITURA PRINCIPAL</span><strong>Antecipar o atraso antes que ele vire problema.</strong></div>
-                    <div><span>IMPACTO OPERACIONAL</span><strong>Causas mapeadas e histórico para consulta.</strong></div>
-                  </div>
-                  
-                  <div className="metric-grid mt-6 mb-6 shrink-0">
-                    {modules[0].metrics.map(([label, value]) => (
-                      <div key={label}><span>{label}</span><strong>{value}</strong></div>
-                    ))}
-                  </div>
-                  
-                  <div className="module-detail__bottom mt-auto shrink-0">
-                    <div className="detail-bullets">
-                      {modules[0].bullets.map((bullet) => (
-                        <span key={bullet} className="text-[15px]"><Check size={16} /> {bullet}</span>
-                      ))}
+                  <div className="flex-1 flex flex-col mt-12 shrink-0 px-10 pb-10">
+                    {/* 3 CARDS INFORMATIVOS */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {modules[0].cards.map((card, idx) => {
+                        const CardIcon = card.icon;
+                        return (
+                          <div key={idx} className="flex items-center gap-4 p-6 rounded-2xl bg-[#f8fafc] border border-slate-200/60 border-t-[3px] border-t-blue-500 shadow-sm">
+                            <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-white rounded-xl shadow-sm text-blue-500">
+                              <CardIcon size={22} strokeWidth={2.5} />
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="flex items-baseline gap-1">
+                                <span className="text-4xl font-bold text-slate-800 tracking-tight">{card.value}</span>
+                                {card.unit && <span className="text-sm font-semibold text-slate-500">{card.unit}</span>}
+                              </div>
+                              <span className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-1">{card.label}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div className="detail-visual">
-                      <div className="mini-bars"><i /><i /><i /><i /><i /><i /><i /></div>
-                      <div className="mini-line"><span /><span /><span /><span /><span /><span /><span /></div>
+                    
+                    {/* BULLETS NO FORMATO TAG */}
+                    <div className="flex flex-wrap gap-3 mt-10">
+                      {modules[0].bullets.map((bullet) => (
+                        <span key={bullet} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#eff6ff] text-[#1e3a8a] text-[15px] font-medium border border-blue-100/60">
+                          <Check size={18} className="text-blue-500" strokeWidth={2.5} /> {bullet}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </article>
@@ -451,8 +458,8 @@ export default function Home() {
             <div>
               <div className="section-kicker text-cyan-600">/ NXS-02 : RASTREABILIDADE TOTAL</div>
               <h2>
-                <span className="text-reveal-mask">Torre de</span><br />
-                <em><span className="text-reveal-mask text-cyan-900">Amostra Grátis.</span></em>
+                <span className="text-reveal-mask inline-block pb-2">Torre de</span><br />
+                <em><span className="text-reveal-mask inline-block pb-2 text-cyan-900">Amostra Grátis.</span></em>
               </h2>
             </div>
             <span className="heading-index text-cyan-800">DISTRIBUIÇÃO<br /><b>860 MIL+ CX</b></span>
@@ -532,45 +539,54 @@ export default function Home() {
                 }}
                 onClick={() => setFlipAG(!flipAG)}
               >
-                {/* FRENTE: CARTÃO DE DADOS */}
+                {/* FRENTE: CARTÃO DE DADOS ESTILO MOCKUP */}
                 <article 
-                  className={`module-detail module-detail--${modules[1].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col`}
+                  className={`module-detail module-detail--${modules[1].color} absolute inset-0 w-full h-full m-0 overflow-y-auto no-scrollbar rounded-2xl shadow-2xl flex flex-col bg-white`}
                   style={{ backfaceVisibility: "hidden", boxSizing: "border-box" }}
                 >
-                  <div className="module-detail__top shrink-0">
-                    <span className="module-detail__tag">{modules[1].tag}</span>
-                    <span className="module-detail__id">NXS / {modules[1].index}</span>
+                  <div className="module-detail__top shrink-0 px-10 pt-10 pb-4">
+                    <span className="module-detail__tag font-semibold tracking-wider">{modules[1].tag}</span>
+                    <span className="module-detail__id text-slate-400">NXS / {modules[1].index}</span>
                   </div>
                   
-                  <div className="module-detail__title-row shrink-0">
-                    <div>
-                      <IconAG size={32} strokeWidth={1.5} />
-                      <h3 className="text-4xl">{modules[1].title.split("\n").map((line, i) => <span key={i}>{line}</span>)}</h3>
+                  <div className="shrink-0 px-10 flex items-center gap-6 mt-4">
+                    <div className="p-5 bg-cyan-50 text-cyan-600 rounded-2xl shadow-sm">
+                      <IconAG size={42} strokeWidth={1.5} />
                     </div>
+                    <h3 className="text-5xl font-extrabold text-[#111827] tracking-tight leading-tight flex flex-col">
+                      {modules[1].title.split("\n").map((line, i) => <span key={i} className="inline-block pb-2">{line}</span>)}
+                    </h3>
                   </div>
 
-                  <p className="module-detail__description text-lg mt-4 shrink-0">{modules[1].description}</p>
-                  
-                  <div className="module-readout mt-6 shrink-0">
-                    <div><span>LEITURA PRINCIPAL</span><strong>Visibilidade completa, do estoque até a entrega.</strong></div>
-                    <div><span>IMPACTO OPERACIONAL</span><strong>Monitoramento de OCT, NFs em atraso e redução de reentregas.</strong></div>
-                  </div>
-                  
-                  <div className="metric-grid mt-8 mb-8 shrink-0">
-                    {modules[1].metrics.map(([label, value]) => (
-                      <div key={label}><span>{label}</span><strong>{value}</strong></div>
-                    ))}
-                  </div>
-                  
-                  <div className="module-detail__bottom mt-auto shrink-0">
-                    <div className="detail-bullets">
-                      {modules[1].bullets.map((bullet) => (
-                        <span key={bullet} className="text-[15px]"><Check size={16} /> {bullet}</span>
-                      ))}
+                  <div className="flex-1 flex flex-col mt-12 shrink-0 px-10 pb-10">
+                    {/* 3 CARDS INFORMATIVOS */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {modules[1].cards.map((card, idx) => {
+                        const CardIcon = card.icon;
+                        return (
+                          <div key={idx} className="flex items-center gap-4 p-6 rounded-2xl bg-[#f8fafc] border border-slate-200/60 border-t-[3px] border-t-cyan-500 shadow-sm">
+                            <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-white rounded-xl shadow-sm text-cyan-500">
+                              <CardIcon size={22} strokeWidth={2.5} />
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="flex items-baseline gap-1">
+                                <span className="text-4xl font-bold text-slate-800 tracking-tight">{card.value}</span>
+                                {card.unit && <span className="text-sm font-semibold text-slate-500">{card.unit}</span>}
+                              </div>
+                              <span className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-1">{card.label}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div className="detail-visual">
-                      <div className="mini-bars"><i /><i /><i /><i /><i /><i /><i /></div>
-                      <div className="mini-line"><span /><span /><span /><span /><span /><span /><span /></div>
+                    
+                    {/* BULLETS NO FORMATO TAG */}
+                    <div className="flex flex-wrap gap-3 mt-10">
+                      {modules[1].bullets.map((bullet) => (
+                        <span key={bullet} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ecfeff] text-[#164e63] text-[15px] font-medium border border-cyan-100/60">
+                          <Check size={18} className="text-cyan-500" strokeWidth={2.5} /> {bullet}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </article>
@@ -605,8 +621,8 @@ export default function Home() {
       <section className="flow-section container reveal-on-scroll" id="fluxo">
         <div className="section-heading"><div><div className="section-kicker">/ IMPACTO CONSOLIDADO</div>
         <h2>
-          <span className="text-reveal-mask">Múltiplos projetos,</span><br />
-          <em><span className="text-reveal-mask">um mesmo efeito.</span></em>
+          <span className="text-reveal-mask inline-block pb-2">Múltiplos projetos,</span><br />
+          <em><span className="text-reveal-mask inline-block pb-2">um mesmo efeito.</span></em>
         </h2>
         </div><p className="heading-description">Uma análise mais rápida para o Comercial, Marketing, Qualidade, Logística e demais áreas, com dados confiáveis e centralizados em uma única visão sistêmica.</p></div>
         <div className="flow-map">
@@ -639,7 +655,11 @@ export default function Home() {
               <span className="text-indigo-700 block">Indicadores.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
-              Com o Painel Intercompany e a Torre de AG 100% concluídos, o foco atual está no desenvolvimento do <strong>Monitor de Indicadores</strong>, que se atualiza em tempo real ao longo do dia para avisar proativamente quais indicadores ainda não foram realizados.
+             
+
+
+
+             
             </p>
             <button className="inline-flex items-center gap-2 text-slate-900 font-bold uppercase tracking-widest text-sm hover:text-indigo-700 transition-colors border-b-2 border-slate-900 hover:border-indigo-700 pb-1 cursor-pointer" onClick={() => scrollTo("top")}>
               Voltar ao início <ArrowUpRight size={16} />
@@ -748,8 +768,8 @@ export default function Home() {
         <div className="farewell-copy"><span className="section-kicker">/ FECHAMENTO</span>
         
         <h2>
-          <span className="text-reveal-mask">Comece pelo</span><br />
-          <em><span className="text-reveal-mask">necessário.</span></em>
+          <span className="text-reveal-mask inline-block pb-2">Comece pelo</span><br />
+          <em><span className="text-reveal-mask inline-block pb-2">necessário.</span></em>
         </h2>
         
         <p>“Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.”<br /><small>— São Francisco de Assis</small></p><span className="farewell-status"><i /> PROJETO NEXUS / GUILHERME DE PAULA</span></div>
